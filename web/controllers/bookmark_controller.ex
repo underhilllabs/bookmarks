@@ -1,7 +1,16 @@
 defmodule Bookmarks.BookmarkController do
   use Bookmarks.Web, :controller
+  plug :authenticate when action in [:edit, :new, :update, :create, :delete, :bookmarklet]
 
   alias Bookmarks.Bookmark
+
+  defp choose_redirect(params) do
+    if params["popup"] == "true" do
+      :goodbye
+    else
+      :index
+    end
+  end
 
   def index(conn, params) do
     page = from(b in Bookmark, order_by: [desc: b.updated_at])
@@ -51,7 +60,7 @@ defmodule Bookmarks.BookmarkController do
       {:ok, _bookmark} ->
         conn
         |> put_flash(:info, "Bookmark created successfully.")
-        |> redirect(to: bookmark_path(conn, :index))
+        |> redirect(to: bookmark_path(conn, choose_redirect(bookmark_params)))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -93,14 +102,6 @@ defmodule Bookmarks.BookmarkController do
     end
   end
 
-  defp choose_redirect(params) do
-    if params["popup"] == "true" do
-      :goodbye
-    else
-      :index
-    end
-  end
-
   def update(conn, %{"id" => id, "bookmark" => bookmark_params}) do
     bookmark = Repo.get!(Bookmark, id) |> Repo.preload([:tags])
    
@@ -137,4 +138,14 @@ defmodule Bookmarks.BookmarkController do
     assoc(user, :bookmarks)
   end
   
+  defp authenticate(conn, _opts) do
+    if conn.assigns.current_user do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must be logged in to access that page")
+      |> redirect(to: session_path(conn, :new))
+      |> halt()
+    end
+  end
 end
