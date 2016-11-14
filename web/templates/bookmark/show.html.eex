@@ -1,0 +1,33 @@
+<h2>Show bookmark</h2>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @bookmark.title %>
+  </li>
+
+  <li>
+    <strong>Address:</strong>
+    <%= @bookmark.address %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @bookmark.description %>
+  </li>
+
+  <li>
+    <strong>Private:</strong>
+    <%= @bookmark.private %>
+  </li>
+
+  <li>
+    <strong>Archive page:</strong>
+    <%= @bookmark.archive_page %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: bookmark_path(@conn, :edit, @bookmark) %>
+<%= link "Back", to: bookmark_path(@conn, :index) %>

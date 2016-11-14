@@ -4,6 +4,7 @@ defmodule Bookmarks.User do
   schema "users" do
     field :email, :string
     field :password_hash, :string
+    has_many :bookmarks, Bookmarks.Bookmark
 
     timestamps()
   end

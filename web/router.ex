@@ -1,6 +1,7 @@
 defmodule Bookmarks.Router do
   use Bookmarks.Web, :router
 
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -15,6 +16,7 @@ defmodule Bookmarks.Router do
 
   scope "/", Bookmarks do
     pipe_through :browser # Use the default browser stack
+    resources "/bookmarks", BookmarkController
 
     get "/hello/:name", HelloController, :bigwig
     get "/", PageController, :index

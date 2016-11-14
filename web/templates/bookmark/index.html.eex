@@ -1,0 +1,34 @@
+<h2>Listing bookmarks</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Address</th>
+      <th>Description</th>
+      <th>Private</th>
+      <th>Archive page</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for bookmark <- @bookmarks do %>
+    <tr>
+      <td><%= bookmark.title %></td>
+      <td><%= bookmark.address %></td>
+      <td><%= bookmark.description %></td>
+      <td><%= bookmark.private %></td>
+      <td><%= bookmark.archive_page %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: bookmark_path(@conn, :show, bookmark), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: bookmark_path(@conn, :edit, bookmark), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: bookmark_path(@conn, :delete, bookmark), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New bookmark", to: bookmark_path(@conn, :new) %>
