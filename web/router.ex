@@ -17,6 +17,7 @@ defmodule Bookmarks.Router do
     pipe_through :browser # Use the default browser stack
     resources "/bookmarks", BookmarkController
     resources "/tags", TagController
+    resources "/users", UserController
 
     get "/hello/:name", HelloController, :bigwig
     get "/", PageController, :index

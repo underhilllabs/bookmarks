@@ -7,6 +7,8 @@ defmodule Bookmarks.Bookmark do
     field :description, :string
     field :private, :boolean, default: false
     field :archive_page, :boolean, default: false
+    has_many :tags, Bookmarks.Tag
+    belongs_to :user, Bookmarker.User
 
     timestamps()
   end
