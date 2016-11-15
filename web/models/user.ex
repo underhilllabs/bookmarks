@@ -7,8 +7,8 @@ defmodule Bookmarks.User do
     field :password, :string, virtual: true
     field :username, :string
     field :fullname, :string
-    #has_many :bookmarks, Bookmarks.Bookmark
-    #has_many :tags, Bookmarks.Tag
+    has_many :bookmarks, Bookmarks.Bookmark
+    has_many :tags, Bookmarks.Tag
 
     timestamps()
   end
@@ -38,9 +38,5 @@ defmodule Bookmarks.User do
       _ ->
         changeset
     end
-  end
-
-  defp hashed_password(password) do
-    Comeonin.Bcrypt.hashpwsalt(password)
   end
 end

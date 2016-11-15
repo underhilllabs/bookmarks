@@ -4,17 +4,17 @@
 
   <li>
     <strong>Nick Name:</strong>
-    <%= @user.name %>
+    <%= @user.username %>
   </li>
 
   <li>
     <strong>Full Name:</strong>
-    <%= @user.user_id %>
+    <%= @user.fullname %>
   </li>
 
   <li>
     <strong>Email:</strong>
-    <%= @user.bookmark_id %>
+    <%= @user.email %>
   </li>
 
 </ul>
