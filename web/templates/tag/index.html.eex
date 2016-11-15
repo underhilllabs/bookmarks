@@ -1,0 +1,30 @@
+<h2>Listing tags</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>User</th>
+      <th>Bookmark</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for tag <- @tags do %>
+    <tr>
+      <td><%= tag.name %></td>
+      <td><%= tag.user_id %></td>
+      <td><%= tag.bookmark_id %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: tag_path(@conn, :show, tag), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: tag_path(@conn, :edit, tag), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: tag_path(@conn, :delete, tag), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New tag", to: tag_path(@conn, :new) %>
