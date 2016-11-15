@@ -7,8 +7,8 @@ defmodule Bookmarks.User do
     field :password, :string, virtual: true
     field :username, :string
     field :fullname, :string
-    has_many :bookmarks, Bookmarks.Bookmark
-    has_many :tags, Bookmarks.Tag
+    #has_many :bookmarks, Bookmarks.Bookmark
+    #has_many :tags, Bookmarks.Tag
 
     timestamps()
   end
@@ -16,15 +16,15 @@ defmodule Bookmarks.User do
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
-  def changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, [:email, :password, :username, :fullname ])
+  def changeset(model, params \\ :empty) do
+    model
+    |> cast(params, ~w(email password username fullname) )
     |> validate_required([:email, :password])
   end
 
   def registration_changeset(model, params) do 
     model
-    |> changeset(model)
+    |> changeset(params)
     |> cast(params, ~w(password), [])
     |> validate_length(:password, min: 6, max: 100)
     #|> hashed_password(password)
