@@ -14,7 +14,8 @@ defmodule Bookmarks.BookmarkController do
   end
 
   def create(conn, %{"bookmark" => bookmark_params}) do
-    changeset = Bookmark.changeset(%Bookmark{}, bookmark_params)
+    bookmark = %Bookmark{user_id: conn.assigns.current_user.id} 
+    changeset = Bookmark.changeset(bookmark, bookmark_params)
 
     case Repo.insert(changeset) do
       {:ok, _bookmark} ->
@@ -28,6 +29,7 @@ defmodule Bookmarks.BookmarkController do
 
   def show(conn, %{"id" => id}) do
     bookmark = Repo.get!(Bookmark, id)
+              |> Repo.preload(:user)
     render(conn, "show.html", bookmark: bookmark)
   end
 

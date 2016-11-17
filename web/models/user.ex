@@ -27,7 +27,6 @@ defmodule Bookmarks.User do
     |> changeset(params)
     |> cast(params, ~w(password), [])
     |> validate_length(:password, min: 6, max: 100)
-    #|> hashed_password(password)
     |> put_pass_hash()
   end
   

@@ -27,6 +27,11 @@
     <%= @bookmark.archive_page %>
   </li>
 
+  <li>
+    <strong>Creator:</strong>
+    <%= @bookmark.user.username %>
+  </li>
+
 </ul>
 
 <%= link "Edit", to: bookmark_path(@conn, :edit, @bookmark) %>

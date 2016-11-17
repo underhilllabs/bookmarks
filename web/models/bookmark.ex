@@ -8,7 +8,7 @@ defmodule Bookmarks.Bookmark do
     field :private, :boolean, default: false
     field :archive_page, :boolean, default: false
     has_many :tags, Bookmarks.Tag
-    belongs_to :user, Bookmarker.User
+    belongs_to :user, Bookmarks.User
 
     timestamps()
   end
@@ -20,5 +20,8 @@ defmodule Bookmarks.Bookmark do
     struct
     |> cast(params, [:title, :address, :description, :private, :archive_page])
     |> validate_required([:title, :address, :description, :private, :archive_page])
+    #|> Changeset.put_assoc(:user, @current_user)
   end
+  
+  @optional_fields ~w(:user_id)
 end
