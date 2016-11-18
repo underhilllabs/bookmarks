@@ -22,7 +22,7 @@ defmodule Bookmarks.Router do
     resources "/sessions", SessionController, only: [:new, :create, :delete]
 
     get "/hello/:name", HelloController, :bigwig
-    get "/", PageController, :index
+    get "/", BookmarkController, :index
   end
 
   # Other scopes may use custom stacks.
