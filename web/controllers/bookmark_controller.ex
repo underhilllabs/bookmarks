@@ -5,6 +5,7 @@ defmodule Bookmarks.BookmarkController do
 
   def index(conn, _params) do
     bookmarks = Repo.all(Bookmark)
+              |> Repo.preload(:user)
     render(conn, "index.html", bookmarks: bookmarks)
   end
 
