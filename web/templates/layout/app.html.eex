@@ -7,26 +7,30 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello Bookmarks!</title>
+    <title>Bookmark Me, Elixir!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>
     <div class="container">
     <div class="header">
-      <ol class="breadcrumb text-right">
+      <ol class="breadcrumb ">
+      <li><h3>Bookmarks</h3></li>
       <%= if @current_user do %>
-        <li><%= @current_user.username %></li>
-        <li>
+        <li><a href="/bookmarks/user/<%= @current_user.id %>">My Bookmarks</a></li>
+      <% end %>
+      <li><a href="/users/">Users</a></li>
+      <%= if @current_user do %>
+        <li class="text-right"><%= @current_user.username %></li>
+        <li class="text-right">
           <%= link "Log out", to: session_path(@conn, :delete, @current_user),
           method: "delete" %>
         </li>
       <% else %>
-        <li><%= link "Register", to: user_path(@conn, :new) %></li>
-        <li><%= link "Log in", to: session_path(@conn, :new) %></li>
+        <li class="text-right"><%= link "Register", to: user_path(@conn, :new) %></li>
+        <li class="text-right"><%= link "Log in", to: session_path(@conn, :new) %></li>
       <% end %>
       </ol>
-      <span class="logo"></span>
     </div>
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
