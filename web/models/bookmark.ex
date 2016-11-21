@@ -19,7 +19,7 @@ defmodule Bookmarks.Bookmark do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:title, :address, :description, :private, :archive_page])
-    |> validate_required([:title, :address, :description, :private, :archive_page])
+    |> validate_required([:title, :address, :private, :archive_page])
     #|> Changeset.put_assoc(:user, @current_user)
   end
   

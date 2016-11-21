@@ -16,6 +16,7 @@ defmodule Bookmarks.Router do
 
   scope "/", Bookmarks do
     pipe_through :browser # Use the default browser stack
+    get "/bookmarks/user/:id", BookmarkController, :user
     resources "/bookmarks", BookmarkController
     resources "/tags", TagController
     resources "/users", UserController #, only: [:index, :show, :new, :create, :update]

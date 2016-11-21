@@ -9,13 +9,27 @@ defmodule Bookmarks.BookmarkController do
     render(conn, "index.html", bookmarks: bookmarks)
   end
 
+  def user(conn, %{"id" => user_id  }) do
+    user = Repo.get(Bookmarks.User, user_id)
+    bookmarks = Repo.all(user_bookmarks(user))
+    render(conn, "index.html", bookmarks: bookmarks)
+  end
+
   def new(conn, _params) do
     changeset = Bookmark.changeset(%Bookmark{})
     render(conn, "new.html", changeset: changeset)
   end
 
+  defp get_tags(params) do
+    %{"tag" => tagstr} = params
+    tagstr 
+    |> String.split(",") 
+    |> Enum.map(&(String.trim(&1, " ")))
+  end
+
   def create(conn, %{"bookmark" => bookmark_params}) do
     bookmark = %Bookmark{user_id: conn.assigns.current_user.id} 
+    bookmark_params = %{bookmark_params| "tag" => get_tags(bookmark_params)}
     changeset = Bookmark.changeset(bookmark, bookmark_params)
 
     case Repo.insert(changeset) do
@@ -35,7 +49,7 @@ defmodule Bookmarks.BookmarkController do
   end
 
   def edit(conn, %{"id" => id}) do
-    bookmark = Repo.get!(Bookmark, id)
+    bookmark = Repo.get!(user_bookmarks(conn.assigns.current_user), id)
     changeset = Bookmark.changeset(bookmark)
     render(conn, "edit.html", bookmark: bookmark, changeset: changeset)
   end
@@ -64,5 +78,9 @@ defmodule Bookmarks.BookmarkController do
     conn
     |> put_flash(:info, "Bookmark deleted successfully.")
     |> redirect(to: bookmark_path(conn, :index))
+  end
+
+  defp user_bookmarks(user) do
+    assoc(user, :bookmarks)
   end
 end
