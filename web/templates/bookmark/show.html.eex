@@ -18,12 +18,17 @@
   </li>
 
   <li>
+    <strong>Tags:</strong>
+    <%= Enum.join(Enum.map(@bookmark.tags, &(&1.name)), ", ") %>
+  </li>
+
+  <li>
     <strong>Private:</strong>
     <%= @bookmark.private %>
   </li>
 
   <li>
-    <strong>Archive page:</strong>
+    <strong>archive page:</strong>
     <%= @bookmark.archive_page %>
   </li>
 

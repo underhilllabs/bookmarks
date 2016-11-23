@@ -21,6 +21,7 @@ defmodule Bookmarks.Router do
     resources "/tags", TagController
     resources "/users", UserController #, only: [:index, :show, :new, :create, :update]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/bookmarks_tags", BookmarkTagController
 
     get "/hello/:name", HelloController, :bigwig
     get "/", BookmarkController, :index

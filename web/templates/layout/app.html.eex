@@ -15,7 +15,7 @@
     <div class="container">
     <div class="header">
       <ol class="breadcrumb ">
-      <li><h3>Bookmarks</h3></li>
+      <li><h3><a href=/>Bookmarks</a></h3></li>
       <%= if @current_user do %>
         <li><a href="/bookmarks/user/<%= @current_user.id %>">My Bookmarks</a></li>
       <% end %>

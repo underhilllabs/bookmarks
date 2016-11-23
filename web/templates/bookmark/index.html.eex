@@ -1,10 +1,10 @@
 
-
 <%= for bookmark <- @bookmarks do %>
 <div class="bookmark private-<%= bookmark.private %>">
   <h2><a href="<%= bookmark.address %>"><%= bookmark.title %></a></h2>
-      <p><%= bookmark.description %></p>
-      <p>created on: <%= bookmark.inserted_at %>
+      <p class=description><%= bookmark.description %></p>
+      <p class=tags><%= Enum.join(Enum.map(bookmark.tags, &(&1.name)), ", ") %></p>
+      <p>created on: <%= bookmark.inserted_at %> by <%= bookmark.user.username %>
       <%= if @current_user == bookmark.user do %>
         <%= link "Edit", to: bookmark_path(@conn, :edit, bookmark), class: "btn btn-default btn-xs" %>
         <%= link "delete", to: bookmark_path(@conn, :delete, bookmark), class: "btn btn-default btn-xs" %>
