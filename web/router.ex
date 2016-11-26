@@ -17,14 +17,14 @@ defmodule Bookmarks.Router do
   scope "/", Bookmarks do
     pipe_through :browser # Use the default browser stack
     get "/bookmarks/user/:id", BookmarkController, :user
-    resources "/bookmarks", BookmarkController
-    resources "/tags", TagController
-    resources "/users", UserController #, only: [:index, :show, :new, :create, :update]
-    resources "/sessions", SessionController, only: [:new, :create, :delete]
-    resources "/bookmarks_tags", BookmarkTagController
-
+    get "/tags", TagController, :index
     get "/hello/:name", HelloController, :bigwig
     get "/", BookmarkController, :index
+    get "/tags/name/:name", TagController, :name
+
+    resources "/bookmarks", BookmarkController
+    resources "/users", UserController #, only: [:index, :show, :new, :create, :update]
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
   # Other scopes may use custom stacks.
