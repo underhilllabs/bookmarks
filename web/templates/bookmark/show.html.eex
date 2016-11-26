@@ -19,7 +19,7 @@
 
   <li>
     <strong>Tags:</strong>
-    <%= Enum.join(Enum.map(@bookmark.tags, &(&1.name)), ", ") %>
+    <%= raw(Bookmarks.Bookmark.tag_link(@bookmark.tags)) %>
   </li>
 
   <li>

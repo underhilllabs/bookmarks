@@ -60,8 +60,6 @@ defmodule Bookmarks.BookmarkController do
             |> Enum.map(&(&1.name))
             |> Enum.join(", ")
     changeset = Bookmark.changeset(bookmark, %{tags: tagstr})
-                #|> change(%{tags: "cats, scifi"})
-
     render(conn, "edit.html", bookmark: bookmark, changeset: changeset)
   end
 
@@ -96,15 +94,10 @@ defmodule Bookmarks.BookmarkController do
     assoc(user, :bookmarks)
   end
 
-
   defp join_tags(tags) do
     tags
     |> Enum.map(&(&1.name))
     |> Enum.join(", ")
-    #Enum.join(Enum.map(tags, &(&1.name)), ", ")
   end
   
-  defp insert_tag(name, user_id, bookmark_id) do
-    Repo.insert( %Tag{name: name, user_id: user_id, bookmark_id: bookmark_id} )
-  end
 end

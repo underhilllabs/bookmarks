@@ -45,4 +45,13 @@ defmodule Bookmarks.Bookmark do
     |> Enum.map(&(Bookmarks.Tag.create(&1)))
   end
 
+  def pretty_date(date) do
+  end
+
+  def tag_link(tagstr) do
+    tagstr
+    |> Enum.map(&(&1.name))
+    |> Enum.map(&("<span><a href='/tags/name/#{&1}'>#{&1}</a></span>"))
+    |> Enum.join(" ")
+  end
 end
