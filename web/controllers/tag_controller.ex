@@ -2,10 +2,15 @@ defmodule Bookmarks.TagController do
   use Bookmarks.Web, :controller
 
   alias Bookmarks.Tag
+  import Ecto.Query, only: [from: 2]
 
   def index(conn, _params) do
-    tags = Repo.all(Tag)
-    render(conn, "index.html", tags: tags)
+    tags_count = from(t in Bookmarks.Tag, 
+                      select: [t.name, count(t.name)], 
+                      group_by: t.name,
+                      order_by: [desc: count(t.name), asc: t.name]) 
+                 |> Repo.all
+    render(conn, "index.html", tags_count: tags_count)
   end
 
   def new(conn, _params) do
