@@ -21,6 +21,8 @@
       <% end %>
       <li><a href="/users/">Users</a></li>
       <%= if @current_user do %>
+        <li><%= link "Tags", to: tag_path(@conn, :index) %></li>
+        <li><a href="/bookmarks/new">Add a Bookmark</a></li>
         <li class="text-right"><%= @current_user.username %></li>
         <li class="text-right">
           <%= link "Log out", to: session_path(@conn, :delete, @current_user),
