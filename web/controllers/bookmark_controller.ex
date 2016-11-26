@@ -3,6 +3,7 @@ defmodule Bookmarks.BookmarkController do
 
   alias Bookmarks.Bookmark
   alias Bookmarks.Tag
+  import Ecto.Query, only: [from: 2]
 
   def index(conn, _params) do
     bookmarks = Repo.all(Bookmark)
@@ -22,18 +23,15 @@ defmodule Bookmarks.BookmarkController do
   end
 
   def new(conn, _params) do
-    changeset = Bookmark.changeset(%Bookmark{})
+    changeset = Bookmark.changeset(%Bookmark{tags: ""})
                 #|> Repo.preload(:tags)
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"bookmark" => bookmark_params}) do
     tags = Bookmark.get_tags(bookmark_params)
-    #bookmark = %Bookmark{user_id: conn.assigns.current_user.id, tags: get_tags(bookmark_params)} 
     bookmark = %Bookmark{user_id: conn.assigns.current_user.id} 
-    #bookmark_params = %{bookmark_params| tags: get_tags(bookmark_params)}
     changeset = Bookmark.changeset(bookmark, bookmark_params)
-              # |> cast_assoc(:tags)
 
     case Repo.insert(changeset) do
       {:ok, bookmark} ->
@@ -69,8 +67,8 @@ defmodule Bookmarks.BookmarkController do
 
   def update(conn, %{"id" => id, "bookmark" => bookmark_params}) do
     bookmark = Repo.get!(Bookmark, id)
-              |> Repo.preload(:tags)
     changeset = Bookmark.changeset(bookmark, bookmark_params)
+    Bookmarks.Tag.create_bookmark_tags(bookmark.id, conn.assigns.current_user.id, bookmark_params)
 
     case Repo.update(changeset) do
       {:ok, bookmark} ->
