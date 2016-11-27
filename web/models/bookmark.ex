@@ -26,12 +26,6 @@ defmodule Bookmarks.Bookmark do
   
   @optional_fields ~w(:user_id)
 
-  # put tags in a list of maps
-  defp map_tags(params) do
-    %{"tag" => tagstr} = params
-    tagstr
-    |> Enum.map(&Map.put(%{user_id: conn.assigns.current_user.id}, :name, &1))
-  end
   
   def get_tags(params) do
     %{"tags" => tagstr} = params

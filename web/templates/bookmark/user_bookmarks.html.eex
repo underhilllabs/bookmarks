@@ -1,3 +1,4 @@
+<h1>Bookmarks for <%= @user.username %></h1>
 
 <%= for bookmark <- @bookmarks do %>
 <div class="bookmark private-<%= bookmark.private %>">
@@ -15,10 +16,12 @@
 
 <div class="pagination">
 <%= if @total_pages > @page_number do %>
-<span class=earlier><a href="?page=<%= @page_number + 1 %>"><< earlier</a>
+  <span class=earlier><a href="?page=<%= @page_number + 1 %>"><< earlier</a>
 <%= end %>
-<span class="current-page"><%= @page_number %></span>
+<%= if @total_pages != @page_number do %>
+  <span class="current-page"><%= @page_number %></span>
+<%= end %>
 <%= if 1 < @page_number do %>
-<span class=later><a href="?page=<%= @page_number - 1 %>">later >></a>
+  <span class=later><a href="?page=<%= @page_number - 1 %>">later >></a>
 <%= end %>
 </div>

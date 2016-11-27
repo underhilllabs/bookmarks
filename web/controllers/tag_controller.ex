@@ -13,13 +13,21 @@ defmodule Bookmarks.TagController do
     render(conn, "index.html", tags_count: tags_count)
   end
 
-  def name(conn, %{"name" => name}) do
-    bookmarks = from(b in Bookmarks.Bookmark,
+  def name(conn, params) do
+    %{"name" => name} = params
+    page = from(b in Bookmarks.Bookmark,
                     join: t in Tag, on: b.id == t.bookmark_id,
                     where: t.name == ^name,
-                    order_by: [desc: b.updated_at])
-                |> Repo.all
-                |> Repo.preload([:tags, :user])
-    render(conn, "name.html", name: name, bookmarks: bookmarks)
+                    order_by: [desc: b.updated_at],
+                    preload: [:tags, :user])
+                |> Repo.paginate(params) 
+    #render(conn, "name.html", name: name, bookmarks: bookmarks)
+    render conn, "name.html", 
+      name: name,
+      bookmarks: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
   end
 end

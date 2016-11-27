@@ -3,23 +3,39 @@ defmodule Bookmarks.BookmarkController do
 
   alias Bookmarks.Bookmark
   alias Bookmarks.Tag
-  import Ecto.Query, only: [from: 2]
 
-  def index(conn, _params) do
-    bookmarks = Repo.all(Bookmark)
-              |> Repo.preload(:user)
-              |> Repo.preload(:tags)
-    render(conn, "index.html", bookmarks: bookmarks)
+  def index(conn, params) do
+    page = from(b in Bookmark,order_by: [desc: b.updated_at])
+              |> preload(:user)
+              |> preload(:tags)
+              |> Repo.paginate(params) 
+    render conn, "index.html", 
+      bookmarks: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
   end
 
   # get /bookmarks/user/:id
   # Show a user's bookmarks
-  def user(conn, %{"id" => user_id  }) do
-    user = Repo.get(Bookmarks.User, user_id)
-    bookmarks = Repo.all(user_bookmarks(user))
-                |> Repo.preload(:user)
-                |> Repo.preload(:tags)
-    render(conn, "index.html", bookmarks: bookmarks)
+  def user(conn, params) do
+    %{"id" => user_id} = params
+    user = Repo.one(from u in Bookmarks.User, where: [id: ^user_id])
+    page = from(b in Bookmark, 
+              where: b.user_id == ^user_id,
+              order_by: [desc: b.updated_at])
+              |> preload(:user)
+              |> preload(:tags)
+              |> Repo.paginate(params) 
+
+    render conn, "user_bookmarks.html", 
+      bookmarks: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries,
+      user: user
   end
 
   def new(conn, _params) do
@@ -92,12 +108,6 @@ defmodule Bookmarks.BookmarkController do
 
   defp user_bookmarks(user) do
     assoc(user, :bookmarks)
-  end
-
-  defp join_tags(tags) do
-    tags
-    |> Enum.map(&(&1.name))
-    |> Enum.join(", ")
   end
   
 end
