@@ -1,18 +1,20 @@
-<h1>Bookmarks for <%= @user.username %></h1>
+<h2>Bookmarks for <%= @user.username %></h2>
 
-<%= for bookmark <- @bookmarks do %>
-<div class="bookmark private-<%= bookmark.private %>">
-  <h2><a href="<%= bookmark.address %>"><%= bookmark.title %></a></h2>
-      <p class=description><%= bookmark.description %></p>
-      <p class=tags><%= raw(Bookmarks.Bookmark.tag_link(bookmark.tags)) %></p>
-      <p><%= bookmark.inserted_at |> Timex.format!("{Mfull} {D}, {YYYY}") %> by <%= bookmark.user.username %>
-      <%= if @current_user == bookmark.user do %>
-        <%= link "Edit", to: bookmark_path(@conn, :edit, bookmark), class: "btn btn-default btn-xs" %>
-        <%= link "delete", to: bookmark_path(@conn, :delete, bookmark), class: "btn btn-default btn-xs" %>
-      <% end %>
-      </p>
+<div class=main-wrapper>
+  <%= for bookmark <- @bookmarks do %>
+  <div class="bookmark-wrapper bookmark private-<%= bookmark.private %>">
+    <div class="bookmark-title"><a href="<%= bookmark.address %>"><%= bookmark.title %></a></div>
+        <div class="bookmark-description"><%= bookmark.description %></div>
+        <div class="bookmark-tags"><%= raw(Bookmarks.Bookmark.tag_link(bookmark.tags)) %></div>
+        <div class="bookmark-details"><%= bookmark.inserted_at |> Timex.format!("{Mfull} {D}, {YYYY}") %> by <%= bookmark.user.username %>
+        <%= if @current_user == bookmark.user do %>
+          <%= link "Edit", to: bookmark_path(@conn, :edit, bookmark), class: "xbtn xbtn-default xbtn-xs" %>
+          <%= link "delete", to: bookmark_path(@conn, :delete, bookmark), class: "xbtn xbtn-default xbtn-xs" %>
+        <% end %>
+        </div>
+  </div>
+  <% end %>
 </div>
-<% end %>
 
 <div class="pagination">
 <%= if @total_pages > @page_number do %>
