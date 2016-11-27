@@ -5,7 +5,7 @@
   <h2><a href="<%= bookmark.address %>"><%= bookmark.title %></a></h2>
       <p class=description><%= bookmark.description %></p>
       <p class=tags><%= raw(Bookmarks.Bookmark.tag_link(bookmark.tags)) %></p>
-      <p>created on: <%= bookmark.inserted_at %> by <%= bookmark.user.username %>
+      <p><%= bookmark.inserted_at |> Timex.format!("{Mfull} {D}, {YYYY}")%> by <%= bookmark.user.username %>
       <%= if @current_user == bookmark.user do %>
         <%= link "Edit", to: bookmark_path(@conn, :edit, bookmark), class: "btn btn-default btn-xs" %>
         <%= link "delete", to: bookmark_path(@conn, :delete, bookmark), class: "btn btn-default btn-xs" %>
