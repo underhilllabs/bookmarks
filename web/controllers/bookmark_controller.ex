@@ -39,22 +39,22 @@ defmodule Bookmarks.BookmarkController do
   end
 
   def new(conn, _params) do
-    changeset = Bookmark.changeset(%Bookmark{tags: ""})
+    changeset = Bookmark.changeset(%Bookmark{}, %{tags: ""})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"bookmark" => bookmark_params}) do
-    tags = Bookmark.get_tags(bookmark_params)
+    tags = Bookmark.parse_tags(bookmark_params)
     bookmark = %Bookmark{user_id: conn.assigns.current_user.id} 
     changeset = Bookmark.changeset(bookmark, bookmark_params)
 
     case Repo.insert(changeset) do
       {:ok, bookmark} ->
         # insert tags with this bookmark and user
-        Enum.map(tags, fn(tag) -> 
-          {:ok, %Tag{id: tag_id}} = Repo.insert(%Tag{name: tag})
-          Repo.insert(Bookmarks.BookmarkTag, tag_id: tag_id, bookmark_id: bookmark.id) 
-        end)
+        #Enum.map(tags, fn(tag) -> 
+        #  {:ok, %Tag{id: tag_id}} = Repo.insert(%Tag{name: tag})
+        #  Repo.insert(Bookmarks.BookmarkTag, tag_id: tag_id, bookmark_id: bookmark.id) 
+        #end)
         conn
         |> put_flash(:info, "Bookmark created successfully.")
         |> redirect(to: bookmark_path(conn, :index))

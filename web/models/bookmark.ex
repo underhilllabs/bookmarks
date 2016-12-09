@@ -28,7 +28,7 @@ defmodule Bookmarks.Bookmark do
  
   @optional_fields ~w(:user_id)
 
-  defp parse_tags(params) do
+  def parse_tags(params) do
     (params["tags"] || "")
     |> String.split(",") 
     |> Enum.map(&(String.trim(&1, " ")))
