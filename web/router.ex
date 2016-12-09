@@ -18,7 +18,6 @@ defmodule Bookmarks.Router do
     pipe_through :browser # Use the default browser stack
     get "/bookmarks/user/:id", BookmarkController, :user
     get "/tags", TagController, :index
-    get "/hello/:name", HelloController, :bigwig
     get "/", BookmarkController, :index
     get "/tags/name/:name", TagController, :name
 
