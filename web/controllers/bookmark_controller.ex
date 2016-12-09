@@ -40,7 +40,6 @@ defmodule Bookmarks.BookmarkController do
 
   def new(conn, _params) do
     changeset = Bookmark.changeset(%Bookmark{tags: ""})
-                #|> Repo.preload(:tags)
     render(conn, "new.html", changeset: changeset)
   end
 
@@ -52,7 +51,10 @@ defmodule Bookmarks.BookmarkController do
     case Repo.insert(changeset) do
       {:ok, bookmark} ->
         # insert tags with this bookmark and user
-        Enum.map(tags, fn(tag) -> Repo.insert(%Tag{name: tag, user_id: conn.assigns.current_user.id, bookmark_id: bookmark.id}) end)
+        Enum.map(tags, fn(tag) -> 
+          {:ok, %Tag{id: tag_id}} = Repo.insert(%Tag{name: tag})
+          Repo.insert(Bookmarks.BookmarkTag, tag_id: tag_id, bookmark_id: bookmark.id) 
+        end)
         conn
         |> put_flash(:info, "Bookmark created successfully.")
         |> redirect(to: bookmark_path(conn, :index))
@@ -69,20 +71,21 @@ defmodule Bookmarks.BookmarkController do
   end
 
   def edit(conn, %{"id" => id}) do
-    bookmark = Repo.get!(user_bookmarks(conn.assigns.current_user), id)
-            |> Repo.preload([:tags])
+    #bookmark = Repo.get!(user_bookmarks(conn.assigns.current_user), id)
+    bookmark = Bookmark
+              |> preload([:tags])
+              |> Repo.get!(id)
     %Bookmark{tags: tags} = bookmark
-    tagstr = tags
-            |> Enum.map(&(&1.name))
-            |> Enum.join(", ")
+    tagstr = tags |> Enum.map(&(&1.name)) |> Enum.join(", ")
     changeset = Bookmark.changeset(bookmark, %{tags: tagstr})
-    render(conn, "edit.html", bookmark: bookmark, changeset: changeset)
+                # |> Ecto.Changeset.put_assoc(:tags, [tags])
+    render(conn, "edit.html", bookmark: bookmark, tagstr: tagstr, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "bookmark" => bookmark_params}) do
-    bookmark = Repo.get!(Bookmark, id)
+    bookmark = Repo.get!(Bookmark, id) |> Repo.preload([:tags])
+   
     changeset = Bookmark.changeset(bookmark, bookmark_params)
-    Bookmarks.Tag.create_bookmark_tags(bookmark.id, conn.assigns.current_user.id, bookmark_params)
 
     case Repo.update(changeset) do
       {:ok, bookmark} ->

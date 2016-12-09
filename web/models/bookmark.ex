@@ -1,6 +1,7 @@
 defmodule Bookmarks.Bookmark do
   use Bookmarks.Web, :model
-  alias Bookmarks.Tag
+
+  @derive {Poison.Encoder, only: [:title, :address, :updated_at, :created_at, :description, :private, :archive_page, :user_id]}
 
   schema "bookmarks" do
     field :title, :string
@@ -8,8 +9,8 @@ defmodule Bookmarks.Bookmark do
     field :description, :string
     field :private, :boolean, default: false
     field :archive_page, :boolean, default: false
-    #many_to_many :tags, Tag, join_through: Bookmarks.BookmarkTag
-    has_many :tags, Bookmarks.Tag
+
+    many_to_many :tags, Bookmarks.Tag, join_through: Bookmarks.BookmarkTag, on_replace: :delete 
     belongs_to :user, Bookmarks.User
 
     timestamps()
@@ -20,26 +21,23 @@ defmodule Bookmarks.Bookmark do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title, :address, :description, :private, :archive_page])
-    |> validate_required([:title, :address, :private, :archive_page])
+    |> Ecto.Changeset.cast(params, [:title, :address, :description, :private, :archive_page])
+    |> Ecto.Changeset.validate_required([:title, :address])
+    |> Ecto.Changeset.put_assoc(:tags, parse_tags(params))
   end
-  
+ 
   @optional_fields ~w(:user_id)
 
-  
-  def get_tags(params) do
-    %{"tags" => tagstr} = params
-    tagstr 
+  defp parse_tags(params) do
+    (params["tags"] || "")
     |> String.split(",") 
     |> Enum.map(&(String.trim(&1, " ")))
+    |> Enum.reject(& &1 == "")
+    |> Enum.map(&get_or_insert_tag/1)
   end
 
-  def create_tags(params) do
-    get_tags(params)
-    |> Enum.map(&(Bookmarks.Tag.create(&1)))
-  end
-
-  def pretty_date(date) do
+  defp get_or_insert_tag(name) do
+    Bookmarks.Repo.get_by(Bookmarks.Tag, name: name) || Bookmarks.Repo.insert!(%Bookmarks.Tag{name:  name})
   end
 
   def tag_link(tagstr) do
