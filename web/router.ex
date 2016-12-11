@@ -20,6 +20,8 @@ defmodule Bookmarks.Router do
     get "/tags", TagController, :index
     get "/", BookmarkController, :index
     get "/tags/name/:name", TagController, :name
+    get "/b", BookmarkController, :bookmarklet
+    get "/goodbye", BookmarkController, :goodbye
 
     resources "/bookmarks", BookmarkController
     resources "/users", UserController #, only: [:index, :show, :new, :create, :update]

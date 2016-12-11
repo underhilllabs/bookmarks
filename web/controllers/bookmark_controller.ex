@@ -2,10 +2,9 @@ defmodule Bookmarks.BookmarkController do
   use Bookmarks.Web, :controller
 
   alias Bookmarks.Bookmark
-  alias Bookmarks.Tag
 
   def index(conn, params) do
-    page = from(b in Bookmark,order_by: [desc: b.updated_at])
+    page = from(b in Bookmark, order_by: [desc: b.updated_at])
               |> preload(:user)
               |> preload(:tags)
               |> Repo.paginate(params) 
@@ -44,17 +43,12 @@ defmodule Bookmarks.BookmarkController do
   end
 
   def create(conn, %{"bookmark" => bookmark_params}) do
-    tags = Bookmark.parse_tags(bookmark_params)
+    #tags = Bookmark.parse_tags(bookmark_params)
     bookmark = %Bookmark{user_id: conn.assigns.current_user.id} 
     changeset = Bookmark.changeset(bookmark, bookmark_params)
 
     case Repo.insert(changeset) do
-      {:ok, bookmark} ->
-        # insert tags with this bookmark and user
-        #Enum.map(tags, fn(tag) -> 
-        #  {:ok, %Tag{id: tag_id}} = Repo.insert(%Tag{name: tag})
-        #  Repo.insert(Bookmarks.BookmarkTag, tag_id: tag_id, bookmark_id: bookmark.id) 
-        #end)
+      {:ok, _bookmark} ->
         conn
         |> put_flash(:info, "Bookmark created successfully.")
         |> redirect(to: bookmark_path(conn, :index))
@@ -71,15 +65,40 @@ defmodule Bookmarks.BookmarkController do
   end
 
   def edit(conn, %{"id" => id}) do
-    #bookmark = Repo.get!(user_bookmarks(conn.assigns.current_user), id)
     bookmark = Bookmark
               |> preload([:tags])
               |> Repo.get!(id)
     %Bookmark{tags: tags} = bookmark
     tagstr = tags |> Enum.map(&(&1.name)) |> Enum.join(", ")
     changeset = Bookmark.changeset(bookmark, %{tags: tagstr})
-                # |> Ecto.Changeset.put_assoc(:tags, [tags])
     render(conn, "edit.html", bookmark: bookmark, tagstr: tagstr, changeset: changeset)
+  end
+
+  def bookmarklet(conn, params) do
+    %{"address" => address} = params
+    title = params["title"]
+    case Repo.get_by(Bookmark, address: address) do
+      :nil ->
+        IO.puts "sad trombone for #{title}"
+        bookmark = %Bookmark{address: address, title: title}
+        changeset = Bookmark.changeset(bookmark, %{tags: ""})
+        render(conn, "bookmarklet_new.html", bookmark: bookmark, changeset: changeset)
+      bookmark ->
+        bookmark = bookmark |> Repo.preload(:tags)
+        IO.puts "Found IT"
+        %Bookmark{tags: tags} = bookmark
+        tagstr = tags |> Enum.map(&(&1.name)) |> Enum.join(", ")
+        changeset = Bookmark.changeset(bookmark, %{tags: tagstr})
+        render(conn, "bookmarklet_edit.html", bookmark: bookmark, changeset: changeset)
+    end
+  end
+
+  defp choose_redirect(params) do
+    if params["popup"] == "true" do
+      :goodbye
+    else
+      :index
+    end
   end
 
   def update(conn, %{"id" => id, "bookmark" => bookmark_params}) do
@@ -91,7 +110,8 @@ defmodule Bookmarks.BookmarkController do
       {:ok, bookmark} ->
         conn
         |> put_flash(:info, "Bookmark updated successfully.")
-        |> redirect(to: bookmark_path(conn, :show, bookmark))
+        #|> redirect(to: bookmark_path(conn, :index))
+        |> redirect(to: bookmark_path(conn, choose_redirect(bookmark_params)))
       {:error, changeset} ->
         render(conn, "edit.html", bookmark: bookmark, changeset: changeset)
     end
@@ -107,6 +127,10 @@ defmodule Bookmarks.BookmarkController do
     conn
     |> put_flash(:info, "Bookmark deleted successfully.")
     |> redirect(to: bookmark_path(conn, :index))
+  end
+
+  def goodbye(conn, _) do
+    render(conn, "goodbye.html")
   end
 
   defp user_bookmarks(user) do
