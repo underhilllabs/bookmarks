@@ -7,6 +7,7 @@ defmodule Bookmarks.User do
     field :password, :string, virtual: true
     field :username, :string
     field :fullname, :string
+    field :api_token, :string
     has_many :bookmarks, Bookmarks.Bookmark
     has_many :tags, Bookmarks.Tag
 

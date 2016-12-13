@@ -1,7 +1,7 @@
 defmodule Bookmarks.Bookmark do
   use Bookmarks.Web, :model
 
-  @derive {Poison.Encoder, only: [:title, :address, :updated_at, :created_at, :description, :private, :archive_page, :user_id]}
+  @derive {Poison.Encoder, only: [:title, :address, :updated_at, :created_at, :description, :private, :archive_page, :user_id, :token]}
 
   schema "bookmarks" do
     field :title, :string
@@ -29,7 +29,7 @@ defmodule Bookmarks.Bookmark do
   @optional_fields ~w(:user_id)
 
   def parse_tags(params) do
-    (params["tags"] || "")
+    (params["tags"] || params["taglist"] || "")
     |> String.split(",") 
     |> Enum.map(&(String.trim(&1, " ")))
     |> Enum.reject(& &1 == "")

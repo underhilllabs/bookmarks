@@ -28,8 +28,11 @@ defmodule Bookmarks.Router do
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Bookmarks do
-  #   pipe_through :api
-  # end
+  #Other scopes may use custom stacks.
+  scope "/api", Bookmarks do
+     pipe_through :api
+     # /api/posts/add.json
+     post "/posts/add", ApiBookmarkController, :create
+     post "/posts/add.json", ApiBookmarkController, :create
+  end
 end

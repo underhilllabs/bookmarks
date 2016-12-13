@@ -71,7 +71,7 @@ defmodule Bookmarks.UserController do
     else
       conn
       |> put_flash(:error, "You must be logged in to access that page")
-      |> redirect(to: bookmark_path(conn, :index))
+      |> redirect(to: session_path(conn, :new))
       |> halt()
     end
   end
