@@ -19,6 +19,16 @@
   </ul>
 
   <%= if @current_user == @user do %>
+  <h2>User Links</h2>
+  <div>
+  <p>
+  Drag the following shortcut to your browser bookmark bar for a shortcut to
+  bookmark the current page:
+  </p>
+  <span class="bookmarklet">
+  <a href="javascript:x=document;a=encodeURIComponent(x.location.href);t=encodeURIComponent(x.title);d=encodeURIComponent(window.getSelection());open('http://bookmarks.denvertech.org/b?popup=1&address='+a+'&title='+t+'&description='+d,'Bkmark.me%20Bookmarks','modal=1,status=0,scrollbars=1,toolbar=0,resizable=1,width=730,height=465,left='+(screen.width-730)/2+',top='+(screen.height-425)/2);void%200;">Add Bookmark</a>
+  </span>
+  </div>
   <h2>Authentication Token</h2>
     <p>
       <strong>API Token:</strong>

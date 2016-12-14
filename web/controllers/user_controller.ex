@@ -1,6 +1,6 @@
 defmodule Bookmarks.UserController do
   use Bookmarks.Web, :controller
-  plug :authenticate when action in [:index, :show]
+  plug :authenticate when action in [:edit, :create, :delete]
 
   alias Bookmarks.User
   alias Bookmarks.Bookmark
@@ -10,6 +10,10 @@ defmodule Bookmarks.UserController do
 
   def index(conn, _params) do
     users = Repo.all(User)
+    users = from(u in User,
+            join: b in Bookmark, on: b.user_id == u.id,
+            select: [u.username, u.id, count(b.user_id)],
+            group_by: u.username) |> Repo.all
     render(conn, "index.html", users: users)
   end
 
