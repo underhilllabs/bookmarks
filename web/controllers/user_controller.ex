@@ -3,6 +3,10 @@ defmodule Bookmarks.UserController do
   plug :authenticate when action in [:index, :show]
 
   alias Bookmarks.User
+  alias Bookmarks.Bookmark
+  alias Bookmarks.BookmarkTag
+  alias Bookmarks.Tag
+  import Ecto.Query, only: [from: 2]
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -30,7 +34,22 @@ defmodule Bookmarks.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Repo.get!(User, id)
-    render(conn, "show.html", user: user)
+    bookmarks = from(b in Bookmark, 
+                  where: [user_id: ^id, private: false], 
+                  limit: 10,
+                  order_by: [desc: b.updated_at])
+                |> Repo.all
+    tags_count = from(t in Tag,
+                      join: bt in BookmarkTag, on: bt.tag_id == t.id,
+                      join: b in Bookmark, on: bt.bookmark_id == b.id,
+                      join: u in User, on: b.user_id == u.id,
+                      select: [t.name, count(bt.tag_id)],
+                      where: b.user_id == ^id,
+                      group_by: t.name,
+                      limit: 10,
+                      order_by: [desc: count(bt.tag_id), asc: bt.tag_id])
+                 |> Repo.all
+    render(conn, "show.html", user: user, bookmarks: bookmarks, tags_count: tags_count)
   end
 
   def edit(conn, %{"id" => id}) do

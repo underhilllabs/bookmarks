@@ -1,23 +1,29 @@
-<h2>Show user</h2>
+<h1>User Profile: <%= @user.username %></h1>
 
-<ul>
+<div class="user-profile">
+  Email: <%= @user.email %>
+  <h2>Recent Bookmarks</h2>
 
-  <li>
-    <strong>Nick Name:</strong>
-    <%= @user.username %>
-  </li>
+  <ul class="bookmark-wrapper">
+  <%= for bookmark <- @bookmarks do %>
+    <li class="bookmark-title"><a href="<%= bookmark.address %>"><%= bookmark.title %></a></li>
+  <% end %>
+  </ul>
 
-  <li>
-    <strong>Full Name:</strong>
-    <%= @user.fullname %>
-  </li>
+  <h2>Most Popular Tags</h2>
+  <ul class="bookmark-wrapper">
+  <%= for tag_count <- @tags_count,
+      [tag, count] = tag_count do %>
+    <li class="bookmark-title"><a href="/tags/name/<%= tag %>"><%= tag %> (<%= count %>)</a></li>
+  <% end %>
+  </ul>
 
-  <li>
-    <strong>Email:</strong>
-    <%= @user.email %>
-  </li>
+  <%= if @current_user == @user do %>
+  <h2>Authentication Token</h2>
+    <p>
+      <strong>API Token:</strong>
+      <%= @user.api_token %>
+    </p>
+  <% end %>
+</div>
 
-</ul>
-
-<%= link "Edit", to: user_path(@conn, :edit, @user) %>
-<%= link "Back", to: user_path(@conn, :index) %>
