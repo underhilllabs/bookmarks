@@ -16,14 +16,4 @@
   <% end %>
 </div>
 
-<div class="pagination">
-<%= if @total_pages > @page_number do %>
-  <span class=earlier><a href="?page=<%= @page_number + 1 %>"><< earlier</a>
-<%= end %>
-<%= if @total_pages != @page_number do %>
-  <span class="current-page"><%= @page_number %></span>
-<%= end %>
-<%= if 1 < @page_number do %>
-  <span class=later><a href="?page=<%= @page_number - 1 %>">later >></a>
-<%= end %>
-</div>
+<%= render "paginate.html", total_pages: @total_pages, page_number: @page_number %>

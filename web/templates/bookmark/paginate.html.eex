@@ -1,0 +1,28 @@
+<div class="pagination">
+  <%= if @total_pages > @page_number do %>
+    <span class=earlier><a href="?page=<%= @page_number + 1 %>">Prev</a></span>
+    <span class="pagination_ellipses">...</a>
+  <%= else %>
+    <span class=earlier>Prev</span>
+  <%= end %>
+  <%= if @total_pages >= (@page_number + 2) do %>
+    <span class=earlier><a href="?page=<%= @page_number + 2 %>"><%= @page_number + 2 %></a></span>
+  <%= end %>
+  <%= if @total_pages >= (@page_number + 1) do %>
+    <span class=earlier><a href="?page=<%= @page_number + 1 %>"><%= @page_number + 1 %></a></span>
+  <%= end %>
+  <%= if @total_pages >= @page_number do %>
+    <span class="current-page"><%= @page_number %></span>
+  <%= end %>
+  <%= if 0 < (@page_number - 1) do %>
+    <span class=earlier><a href="?page=<%= @page_number - 1 %>"><%= @page_number - 1 %></a></span>
+  <%= end %>
+  <%= if 0 < (@page_number - 2) do %>
+    <span class=earlier><a href="?page=<%= @page_number - 2 %>"><%= @page_number - 2 %></a></span>
+  <%= end %>
+  <%= if 1 < @page_number do %>
+    <span class=later><a href="?page=<%= @page_number - 1 %>">Next</a></span>
+  <%= else %>
+    <span class=later>Next</span>
+  <%= end %>
+</div>
