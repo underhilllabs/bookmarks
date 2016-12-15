@@ -4,6 +4,12 @@ defmodule Bookmarks.BookmarkController do
 
   alias Bookmarks.Bookmark
 
+  defp archive_url(url, id) do
+    Task.async fn ->
+      Archiver.archive(url, id)
+    end
+  end
+
   defp choose_redirect(params) do
     if params["popup"] == "true" do
       :goodbye
@@ -13,7 +19,11 @@ defmodule Bookmarks.BookmarkController do
   end
 
   def index(conn, params) do
-    page = from(b in Bookmark, order_by: [desc: b.updated_at])
+    page = from(b in Bookmark, 
+                #where: [private: false], 
+                # ecto 2.1
+                # or_where: [user_id: conn.assigns.current_user.id],
+                order_by: [desc: b.updated_at])
               |> preload(:user)
               |> preload(:tags)
               |> Repo.paginate(params) 
@@ -36,7 +46,6 @@ defmodule Bookmarks.BookmarkController do
               |> preload(:user)
               |> preload(:tags)
               |> Repo.paginate(params) 
-
     render conn, "user_bookmarks.html", 
       bookmarks: page.entries,
       page_number: page.page_number,
@@ -57,13 +66,21 @@ defmodule Bookmarks.BookmarkController do
     changeset = Bookmark.changeset(bookmark, bookmark_params)
 
     case Repo.insert(changeset) do
-      {:ok, _bookmark} ->
+      {:ok, bookmark} ->
+        if bookmark.archive_page == true do
+          archive_url bookmark.address, bookmark.id
+        end
         conn
         |> put_flash(:info, "Bookmark created successfully.")
         |> redirect(to: bookmark_path(conn, choose_redirect(bookmark_params)))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+  def archive(conn, %{"id" => id}) do
+    bookmark = Repo.get!(Bookmark, id)
+    render(conn, "archive.html", bookmark: bookmark)
   end
 
   def show(conn, %{"id" => id}) do
@@ -104,14 +121,14 @@ defmodule Bookmarks.BookmarkController do
 
   def update(conn, %{"id" => id, "bookmark" => bookmark_params}) do
     bookmark = Repo.get!(Bookmark, id) |> Repo.preload([:tags])
-   
     changeset = Bookmark.changeset(bookmark, bookmark_params)
-
     case Repo.update(changeset) do
       {:ok, bookmark} ->
+        if bookmark.archive_page == true do
+          archive_url bookmark.address, bookmark.id
+        end
         conn
         |> put_flash(:info, "Bookmark updated successfully.")
-        #|> redirect(to: bookmark_path(conn, :index))
         |> redirect(to: bookmark_path(conn, choose_redirect(bookmark_params)))
       {:error, changeset} ->
         render(conn, "edit.html", bookmark: bookmark, changeset: changeset)
