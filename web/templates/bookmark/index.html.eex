@@ -10,6 +10,9 @@
             <%= if @current_user == bookmark.user do %>
               <%= link "Edit", to: bookmark_path(@conn, :edit, bookmark), class: "xbtn xbtn-default xbtn-xs" %>
               <%= link "Delete", to: bookmark_path(@conn, :delete, bookmark), method: :delete, data: [confirm: "Are you sure?"], class: "xbtn xbtn-default xbtn-xs" %>
+              <%= if bookmark.archive_page do %>
+                <a href="/bookmarks/archive/<%= bookmark.id %>">View Archive</a>
+              <% end %>
             <% end %>
             </div>
         </div>
@@ -17,5 +20,5 @@
   <% end %>
 </div>
 
-<%= render "paginate.html", total_pages: @total_pages, page_number: @page_number %>
+<%= render Bookmarks.UtilityView, "paginate.html", total_pages: @total_pages, page_number: @page_number %>
 
