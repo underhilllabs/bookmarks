@@ -1,4 +1,4 @@
-<h1>Profile of <%= @user.username %></h1>
+<h1>Profile of <%= String.capitalize @user.username %></h1>
 
 <div class="user-profile">
   Email: <%= @user.email %>
@@ -23,6 +23,7 @@
     <li class="bookmark-title"><a href="<%= bookmark.address %>"><%= bookmark.title %></a></li>
   <% end %>
   </ul>
+  <h4><a href="/bookmarks/user/<%= @user.id %>">See all of <%= String.capitalize @user.username %>'s bookmarks</a></h4>
 
   <h2>Most Popular Tags</h2>
   <ul class="bookmark-wrapper">
