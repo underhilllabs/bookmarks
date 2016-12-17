@@ -4,6 +4,12 @@ defmodule Bookmarks.ApiBookmarkController do
 
   alias Bookmarks.Bookmark
 
+  defp archive_url(url, user_id, id) do
+    Task.async fn ->
+      Archiver.archive(url, user_id, id)
+    end
+  end
+
   def create(conn, params) do
     hash = params
     u = Repo.get! Bookmarks.User, hash["user_id"]
@@ -11,6 +17,7 @@ defmodule Bookmarks.ApiBookmarkController do
       params = %{params | "private" => (hash["private"] > 0)}
       is_archived = (hash["is_archived"] > 0)
       tags = params["tag_list"]
+      params = Map.put(params, "description", hash["desc"])
       params = Map.put(params, "tags", tags)
       params = Map.put(params, "archive_page", is_archived)
       # this is not loading if bookmark exists
@@ -19,15 +26,21 @@ defmodule Bookmarks.ApiBookmarkController do
           bookmark = %Bookmark{user_id: u.id, address: hash["url"]} 
                      |> Repo.preload(:tags)
           bc = Bookmark.changeset(bookmark, params)
-          Repo.insert(bc)
+          IO.puts "is the changeset valid? #{bc.valid?}"
+          bookmark = Repo.insert!(bc)
+          if bookmark.archive_page == true do
+            archive_url bookmark.address, bookmark.user_id, bookmark.id
+          end
         bookmark ->
-          IO.puts "already exists"
           bookmark = Repo.preload(bookmark, :tags)
           bc = Bookmark.changeset(bookmark, params)
+          IO.puts "is the changeset valid? #{bc.valid?}"
           Repo.update(bc)
+          if bookmark.archive_page == true do
+            archive_url bookmark.address, bookmark.user_id, bookmark.id
+          end
       end
-      conn
-      |> redirect(to: bookmark_path(conn, :index))
+      json conn, %{}
     end
   end
 end
