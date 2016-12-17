@@ -11,9 +11,9 @@ config :logger, level: :warn
 
 # Configure your database
 config :bookmarks, Bookmarks.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  adapter: Ecto.Adapters.MySQL,
+  username: "root",
+  password: "password_that_is_hard_to_guess",
   database: "bookmarks_test",
   hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+  pool_size: 10
