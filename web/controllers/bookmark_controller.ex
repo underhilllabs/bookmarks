@@ -4,9 +4,9 @@ defmodule Bookmarks.BookmarkController do
 
   alias Bookmarks.Bookmark
 
-  defp archive_url(url, id) do
+  defp archive_url(url, user_id, id) do
     Task.async fn ->
-      Archiver.archive(url, id)
+      Archiver.archive(url, user_id, id)
     end
   end
 
@@ -68,7 +68,7 @@ defmodule Bookmarks.BookmarkController do
     case Repo.insert(changeset) do
       {:ok, bookmark} ->
         if bookmark.archive_page == true do
-          archive_url bookmark.address, bookmark.id
+          archive_url bookmark.address, bookmark.user_id, bookmark.id
         end
         conn
         |> put_flash(:info, "Bookmark created successfully.")
@@ -125,7 +125,7 @@ defmodule Bookmarks.BookmarkController do
     case Repo.update(changeset) do
       {:ok, bookmark} ->
         if bookmark.archive_page == true do
-          archive_url bookmark.address, bookmark.id
+          archive_url bookmark.address, bookmark.user_id, bookmark.id
         end
         conn
         |> put_flash(:info, "Bookmark updated successfully.")
