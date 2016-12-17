@@ -11,7 +11,7 @@ config :bookmarks,
 
 # Configures the endpoint
 config :bookmarks, Bookmarks.Endpoint,
-  url: [host: "dev.redbike.org"],
+  url: [host: "bookmarks.denvertech.org"],
   secret_key_base: "klh8Qs4mdnM1Ry/rhn0z1Q4Kg/pMY4YRn9uHrfIKXUvIYNJxd/J/Gy7K/h6sxNUT",
   render_errors: [view: Bookmarks.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Bookmarks.PubSub,
