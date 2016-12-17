@@ -3,7 +3,6 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: "js/app.js"
-
       // To use a separate vendor.js bundle, specify two files path
       // http://brunch.io/docs/config#-files-
       // joinTo: {
@@ -12,12 +11,12 @@ exports.config = {
       // }
       //
       // To change the order of concatenation of files, explicitly mention here
-      // order: {
-      //   before: [
-      //     "web/static/vendor/js/jquery-2.1.1.js",
-      //     "web/static/vendor/js/bootstrap.min.js"
-      //   ]
-      // }
+      order: {
+        before: [
+          //"web/static/vendor/js/jquery-3.1.1.min.js",
+          //"web/static/vendor/js/bootstrap.min.js"
+        ]
+      }
     },
     stylesheets: {
       joinTo: "css/app.css",

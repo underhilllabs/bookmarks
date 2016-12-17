@@ -103,8 +103,8 @@ form.new_bookmark input {
   width: 70%;
   background: #eee;
   padding: 1em;
-  margin-left: 2em;
-  margin-right: 2em;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 /* line 106, /var/www/bkmark.me/app/assets/stylesheets/bookmark.css.scss */
 .main-content header p {
