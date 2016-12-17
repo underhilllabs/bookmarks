@@ -1,7 +1,7 @@
 <h2><%= @bookmark.title %></h2>
 <script> 
 jQuery(function(){
-  $("#includedContent").load("/archive/<%= @bookmark.id %>.html"); 
+  $("#includedContent").load("/archive/<%= @bookmark.user_id %>/<%= @bookmark.id %>.html"); 
 });
 </script> 
 <div id=includedContent></div>

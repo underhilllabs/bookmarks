@@ -16,4 +16,4 @@
   <% end %>
 </div>
 
-<%= render "paginate.html", total_pages: @total_pages, page_number: @page_number %>
+<%= render Bookmarks.UtilityView, "paginate.html", total_pages: @total_pages, page_number: @page_number %>

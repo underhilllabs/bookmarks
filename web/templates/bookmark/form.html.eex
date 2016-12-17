@@ -24,7 +24,7 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :tags, "Tags", class: "control-label" %>
+    <%= label f, :tags, class: "control-label" %>
     <%= text_input f, :tags, class: "form-control" %>
     <%= error_tag f, :tags %>
   </div>
@@ -42,6 +42,7 @@
   </div>
 
   <div class="form-group">
+    <input type=hidden name=bookmark[popup] value="<%= @popup || "false" %>">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>
