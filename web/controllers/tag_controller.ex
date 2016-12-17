@@ -10,6 +10,7 @@ defmodule Bookmarks.TagController do
                       join: bt in BookmarkTag, on: bt.tag_id == t.id,
                       select: [t.name, count(bt.tag_id)],
                       group_by: t.name,
+                      limit: 50,
                       order_by: [desc: count(bt.tag_id), asc: bt.tag_id])
                  |> Repo.all
     render(conn, "index.html", tags_count: tags_count)
