@@ -1,6 +1,6 @@
 defmodule Bookmarks.UserController do
   use Bookmarks.Web, :controller
-  plug :authenticate when action in [:edit, :create, :delete]
+  plug :authenticate when action in [:edit, :delete, :reset_api_token]
 
   alias Bookmarks.User
   alias Bookmarks.Bookmark
@@ -23,8 +23,8 @@ defmodule Bookmarks.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    changeset = User.registration_changeset(%User{}, user_params)
-
+    token = SecureRandom.urlsafe_base64
+    changeset = User.registration_changeset(%User{api_token: token}, user_params)
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
@@ -60,6 +60,21 @@ defmodule Bookmarks.UserController do
     user = Repo.get!(User, id)
     changeset = User.changeset(user)
     render(conn, "edit.html", user: user, changeset: changeset)
+  end
+
+  # Update the api token for the user
+  def reset_api_token(conn, _params) do
+    user = conn.assigns.current_user
+    token = SecureRandom.urlsafe_base64
+    changeset = User.api_changeset(user, %{api_token: token})
+    case Repo.update(changeset) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, "User API Token updated successfully.")
+        |> redirect(to: user_path(conn, :show, user))
+      {:error, changeset} ->
+        render(conn, "edit.html", user: user, changeset: changeset)
+    end
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do

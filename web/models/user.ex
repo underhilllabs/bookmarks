@@ -19,8 +19,14 @@ defmodule Bookmarks.User do
   """
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, ~w(email password username fullname) )
+    |> cast(params, ~w(email password username fullname api_token) )
     |> validate_required([:email, :password])
+  end
+
+  def api_changeset(model, params \\ :empty) do
+    model
+    |> cast(params, ~w(email password username fullname api_token) )
+    |> validate_required([:api_token])
   end
 
   def registration_changeset(model, params) do 

@@ -19,7 +19,8 @@ defmodule Bookmarks.Mixfile do
   def application do
     [mod: {Bookmarks, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext, :scrivener_html,
-                    :scrivener_ecto, :comeonin, :phoenix_ecto, :timex, :readability, :mariaex ]]
+                    :scrivener_ecto, :comeonin, :phoenix_ecto, :timex, :readability, :mariaex,
+                    :secure_random]]
   end
 
   # Specifies which paths to compile per environment.
@@ -41,6 +42,7 @@ defmodule Bookmarks.Mixfile do
      {:comeonin, "~> 2.6"},
      {:gettext, "~> 0.11"},
      {:timex, "~> 3.0"},
+     {:secure_random, "~> 0.5"},
      {:readability, "~> 0.6.1"},
      {:scrivener_ecto, "~> 1.0"},
      {:scrivener_html, "~> 1.1"},
