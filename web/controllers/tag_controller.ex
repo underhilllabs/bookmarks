@@ -26,6 +26,7 @@ defmodule Bookmarks.TagController do
                     preload: [:tags, :user])
                 |> Repo.paginate(params) 
     render conn, "name.html", 
+      page: page,
       name: name,
       bookmarks: page.entries,
       page_number: page.page_number,
