@@ -20,5 +20,7 @@
   <% end %>
 </div>
 
-<%= render Bookmarks.UtilityView, "paginate.html", total_pages: @total_pages, page_number: @page_number %>
+<div class="pagination-wrapper center span7">
+  <%= pagination_links @page %>
+</div>
 

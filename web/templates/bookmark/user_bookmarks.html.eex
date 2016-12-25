@@ -16,4 +16,6 @@
   <% end %>
 </div>
 
-<%= render Bookmarks.UtilityView, "paginate.html", total_pages: @total_pages, page_number: @page_number %>
+<div class="pagination-wrapper">
+<%= pagination_links @page %>
+</div>

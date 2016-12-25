@@ -28,6 +28,7 @@ defmodule Bookmarks.BookmarkController do
               |> preload(:tags)
               |> Repo.paginate(params) 
     render conn, "index.html", 
+      page: page,
       bookmarks: page.entries,
       page_number: page.page_number,
       page_size: page.page_size,
@@ -47,6 +48,7 @@ defmodule Bookmarks.BookmarkController do
               |> preload(:tags)
               |> Repo.paginate(params) 
     render conn, "user_bookmarks.html", 
+      page: page,
       bookmarks: page.entries,
       page_number: page.page_number,
       page_size: page.page_size,

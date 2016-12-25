@@ -32,6 +32,9 @@ config :guardian, Guardian,
   secret_key: "GFirMsmChzWa36UMMLrOtnquifGm+yF4eHpjL7Po2IoIN8jOTaGKD+dIknVFYZ8h",
   serializer: Bookmarks.GuardianSerializer
 
+config :scrivener_html,
+  routes_helper: BigSnips.Router.Helpers
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

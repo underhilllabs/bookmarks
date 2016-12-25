@@ -18,7 +18,7 @@ defmodule Bookmarks.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Bookmarks, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
+     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext, :scrivener_html,
                     :scrivener_ecto, :comeonin, :phoenix_ecto, :timex, :readability, :mariaex ]]
   end
 
@@ -37,12 +37,13 @@ defmodule Bookmarks.Mixfile do
      {:mariaex, "~> 0.7.5", override: true},
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:gettext, "~> 0.11"},
      {:guardian, "~> 0.13.0"},
      {:comeonin, "~> 2.6"},
+     {:gettext, "~> 0.11"},
      {:timex, "~> 3.0"},
      {:readability, "~> 0.6.1"},
      {:scrivener_ecto, "~> 1.0"},
+     {:scrivener_html, "~> 1.1"},
      {:cowboy, "~> 1.0"}]
   end
 
