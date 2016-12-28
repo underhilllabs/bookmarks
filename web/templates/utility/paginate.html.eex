@@ -1,9 +1,9 @@
-<div class="pagination">
+<div class="pagination flickr_pagination">
   <%= if @total_pages > @page_number do %>
-    <span class=earlier><a href="?page=<%= @page_number + 1 %>">Prev</a></span>
+    <span class=earlier><a href="?page=<%= @page_number + 1 %>">← Earlier</a></span>
     <span class="pagination_ellipses">...</a>
   <%= else %>
-    <span class=earlier>Prev</span>
+    <span class=earlier>← Earlier</span>
   <%= end %>
   <%= if @total_pages >= (@page_number + 2) do %>
     <span class=earlier><a href="?page=<%= @page_number + 2 %>"><%= @page_number + 2 %></a></span>
@@ -21,8 +21,8 @@
     <span class=earlier><a href="?page=<%= @page_number - 2 %>"><%= @page_number - 2 %></a></span>
   <%= end %>
   <%= if 1 < @page_number do %>
-    <span class=later><a href="?page=<%= @page_number - 1 %>">Next</a></span>
+    <span class=later><a href="?page=<%= @page_number - 1 %>">Later →</a></span>
   <%= else %>
-    <span class=later>Next</span>
+    <span class=later>Later →</span>
   <%= end %>
 </div>
