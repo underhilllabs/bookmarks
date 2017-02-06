@@ -20,7 +20,7 @@ defmodule Bookmarks.BookmarkController do
 
   def index(conn, params) do
     page = from(b in Bookmark, 
-                #where: [private: false], 
+                where: [private: false], 
                 # ecto 2.1
                 # or_where: [user_id: conn.assigns.current_user.id],
                 order_by: [desc: b.updated_at])
