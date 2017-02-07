@@ -10,6 +10,9 @@
         <%= if @current_user == bookmark.user do %>
           <%= link "Edit", to: bookmark_path(@conn, :edit, bookmark), class: "xbtn xbtn-default xbtn-xs" %>
           <%= link "delete", to: bookmark_path(@conn, :delete, bookmark), class: "xbtn xbtn-default xbtn-xs" %>
+          <%= if bookmark.archive_page do %>
+            <a href="/bookmarks/archive/<%= bookmark.id %>">View Archive</a>
+          <% end %>
         <% end %>
         </div>
   </div>
