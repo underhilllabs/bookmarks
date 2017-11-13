@@ -2,12 +2,34 @@ defmodule Bookmarks.ApiBookmarkController do
   use Bookmarks.Web, :controller
   #plug :authenticate when action in [:edit, :new, :update, :create, :delete, :bookmarklet]
 
+  import Ecto.Query
   alias Bookmarks.Bookmark
 
   defp archive_url(url, user_id, id) do
     Task.async fn ->
       Archiver.archive(url, user_id, id)
     end
+  end
+
+  def recent(conn, params) do
+
+    page = from(b in Bookmark, 
+                where: [private: false], 
+                # ecto 2.1
+                # or_where: [user_id: conn.assigns.current_user.id],
+                
+                order_by: [desc: b.updated_at])
+              |> preload(:user)
+              |> preload(:tags)
+              |> Repo.paginate(params) 
+    json conn, page
+  end
+
+  def show(conn, %{"id" => id}) do
+    bookmark = Repo.get!(Bookmark, id)
+              |> Repo.preload(:user)
+              |> Repo.preload(:tags)
+    json conn, bookmark 
   end
 
   def create(conn, params) do

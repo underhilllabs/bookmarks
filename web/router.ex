@@ -27,6 +27,7 @@ defmodule Bookmarks.Router do
 
     resources "/bookmarks", BookmarkController
     resources "/users", UserController #, only: [:index, :show, :new, :create, :update]
+    #resources "/users", UserController , only: [:index, :show, :update ]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
@@ -34,6 +35,8 @@ defmodule Bookmarks.Router do
   scope "/api", Bookmarks do
      pipe_through :api
      # /api/posts/add.json
+     get  "/bookmarks/recent.json", ApiBookmarkController, :recent
+     get  "/bookmarks/show.json", ApiBookmarkController, :show
      post "/posts/add", ApiBookmarkController, :create
      post "/posts/add.json", ApiBookmarkController, :create
   end
