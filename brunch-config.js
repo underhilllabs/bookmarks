@@ -2,7 +2,7 @@ exports.config = {
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: "js/app.js"
+      joinTo: "js/app.js",
       // To use a separate vendor.js bundle, specify two files path
       // http://brunch.io/docs/config#-files-
       // joinTo: {
@@ -13,8 +13,8 @@ exports.config = {
       // To change the order of concatenation of files, explicitly mention here
       order: {
         before: [
-          //"web/static/vendor/js/jquery-3.1.1.min.js",
-          //"web/static/vendor/js/bootstrap.min.js"
+          "web/static/vendor/js/jquery-3.1.1.min.js",
+          "web/static/vendor/js/bootstrap.min.js"
         ]
       }
     },
@@ -60,6 +60,9 @@ exports.config = {
     autoRequire: {
       "js/app.js": ["web/static/js/app"]
     }
+  },
+  autoRequire: {
+    "js\\app.js": ["web/static/js/app"]
   },
 
   npm: {
