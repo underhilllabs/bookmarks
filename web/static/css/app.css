@@ -81,12 +81,12 @@ body, caption, th, td, input, textarea, select, option, legend, fieldset {
 }
 
 /* line 84, /var/www/bkmark.me/app/assets/stylesheets/bookmark.css.scss */
-.private {
+.private-true {
   /* border-left: 2px red solid; */
   background: #ffdcdc;
 }
 /* line 87, /var/www/bkmark.me/app/assets/stylesheets/bookmark.css.scss */
-.private .bookmark-updated {
+.private-true .bookmark-updated {
   background-color: #ffdcdc;
   /**/
   padding-left: 0px;
