@@ -26,17 +26,19 @@ defmodule Bookmarks.Router do
     get "/reset_api_token", UserController, :reset_api_token
 
     resources "/bookmarks", BookmarkController
-    resources "/users", UserController #, only: [:index, :show, :new, :create, :update]
-    #resources "/users", UserController , only: [:index, :show, :update ]
+    #resources "/users", UserController #, only: [:index, :show, :new, :create, :update]
+    resources "/users", UserController , only: [:index, :show, :update, :edit ]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
   #Other scopes may use custom stacks.
   scope "/api", Bookmarks do
      pipe_through :api
-     # /api/posts/add.json
+     # /api/bookmarks/recent.json
      get  "/bookmarks/recent.json", ApiBookmarkController, :recent
+     # /api/bookmarks/show.json?id=3434
      get  "/bookmarks/show.json", ApiBookmarkController, :show
+     # /api/posts/add.json
      post "/posts/add", ApiBookmarkController, :create
      post "/posts/add.json", ApiBookmarkController, :create
   end
