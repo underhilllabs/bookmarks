@@ -163,7 +163,7 @@ defmodule Bookmarks.BookmarkController do
     else
       conn
       |> put_flash(:error, "You must be logged in to access that page")
-      |> redirect(to: session_path(conn, :new))
+      |> redirect(to: session_path(conn, :new, orig_params: conn.params))
       |> halt()
     end
   end

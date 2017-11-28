@@ -6,5 +6,8 @@
   <div class="form-group">
     <%= password_input f, :password, placeholder: "Password", class: "form-control" %>
   </div>
+  <input type=hidden name=orig_popup value="<%= "#{@conn.params["orig_params"]["popup"]}" %>">
+  <input type=hidden name=orig_address value="<%= "#{@conn.params["orig_params"]["address"]}" %>">
+  <input type=hidden name=orig_title value="<%="#{@conn.params["orig_params"]["title"]}" %>">
   <%= submit "Log in", class: "btn btn-primary" %>
 <% end %>
