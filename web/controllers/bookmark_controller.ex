@@ -107,13 +107,11 @@ defmodule Bookmarks.BookmarkController do
     title = params["title"]
     case Repo.get_by(Bookmark, address: address) do
       :nil ->
-        IO.puts "sad trombone for #{title}"
         bookmark = %Bookmark{address: address, title: title}
         changeset = Bookmark.changeset(bookmark, %{tags: ""})
         render(conn, "bookmarklet_new.html", bookmark: bookmark, changeset: changeset)
       bookmark ->
         bookmark = bookmark |> Repo.preload(:tags)
-        IO.puts "Found IT"
         %Bookmark{tags: tags} = bookmark
         tagstr = tags |> Enum.map(&(&1.name)) |> Enum.join(", ")
         changeset = Bookmark.changeset(bookmark, %{tags: tagstr})

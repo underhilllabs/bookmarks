@@ -17,7 +17,6 @@ defmodule Bookmarks.ApiBookmarkController do
                 where: [private: false], 
                 # ecto 2.1
                 # or_where: [user_id: conn.assigns.current_user.id],
-                
                 order_by: [desc: b.updated_at])
               |> preload(:user)
               |> preload(:tags)
@@ -48,7 +47,6 @@ defmodule Bookmarks.ApiBookmarkController do
           bookmark = %Bookmark{user_id: u.id, address: hash["url"]} 
                      |> Repo.preload(:tags)
           bc = Bookmark.changeset(bookmark, params)
-          IO.puts "is the changeset valid? #{bc.valid?}"
           bookmark = Repo.insert!(bc)
           if bookmark.archive_page == true do
             archive_url bookmark.address, bookmark.user_id, bookmark.id
@@ -56,7 +54,6 @@ defmodule Bookmarks.ApiBookmarkController do
         bookmark ->
           bookmark = Repo.preload(bookmark, :tags)
           bc = Bookmark.changeset(bookmark, params)
-          IO.puts "is the changeset valid? #{bc.valid?}"
           Repo.update(bc)
           if bookmark.archive_page == true do
             archive_url bookmark.address, bookmark.user_id, bookmark.id

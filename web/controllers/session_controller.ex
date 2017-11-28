@@ -9,8 +9,6 @@ defmodule Bookmarks.SessionController do
   def create(conn, %{"session" => %{"username" => user, "password" => pass}, "orig_address" => address, "orig_title" => title, "orig_popup" => popup} = params) do
     case Bookmarks.Auth.login_by_username_and_pass(conn, user, pass, repo: Repo) do
       {:ok, conn} ->
-        IO.puts "address is #{address}"
-        IO.inspect params 
         conn
         |> put_flash(:info, "Welcome back!")
         |> redirect(to: bookmark_path(conn, :bookmarklet, address: address, title: title, popup: popup))
