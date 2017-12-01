@@ -102,9 +102,7 @@ defmodule Bookmarks.BookmarkController do
     render(conn, "edit.html", bookmark: bookmark, tagstr: tagstr, changeset: changeset)
   end
 
-  def bookmarklet(conn, params) do
-    %{"address" => address} = params
-    title = params["title"]
+  def bookmarklet(conn, %{"address" => address, "title" => title} = params) do
     case Repo.get_by(Bookmark, address: address) do
       :nil ->
         bookmark = %Bookmark{address: address, title: title}
@@ -154,14 +152,25 @@ defmodule Bookmarks.BookmarkController do
   defp user_bookmarks(user) do
     assoc(user, :bookmarks)
   end
-  
-  defp authenticate(conn, _opts) do
+ 
+  # This function clause was redirected to from bookmarklet
+  defp authenticate(%{params: %{"address" => _address}} = conn, _opts) do
     if conn.assigns.current_user do
       conn
     else
       conn
       |> put_flash(:error, "You must be logged in to access that page")
       |> redirect(to: session_path(conn, :new, orig_params: conn.params))
+      |> halt()
+    end
+  end
+  defp authenticate(conn, _opts) do
+    if conn.assigns.current_user do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must be logged in to access that page")
+      |> redirect(to: session_path(conn, :new))
       |> halt()
     end
   end
