@@ -37,6 +37,11 @@
           <%= if @current_user do %>
             <li><%= link "Tags", to: tag_path(@conn, :index) %></li>
             <li><a href="/bookmarks/new">Add a Bookmark</a></li>
+           <form class="navbar-form navbar-left" action="/search" method="get">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search" name="search_term">
+              </div>
+            </form>
           <% end %>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -47,7 +52,7 @@
               method: "delete" %>
             </li>
           <% else %>
-            <li><%= link "Register", to: user_path(@conn, :new) %></li>
+            <li><%# link "Register", to: user_path(@conn, :new) %></li>
             <li><%= link "Log in", to: session_path(@conn, :new) %></li>
           <% end %>
         </ul>
