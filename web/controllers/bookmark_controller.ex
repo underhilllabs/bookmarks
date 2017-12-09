@@ -1,6 +1,6 @@
 defmodule Bookmarks.BookmarkController do
   use Bookmarks.Web, :controller
-  plug :authenticate when action in [:edit, :new, :update, :create, :delete, :bookmarklet]
+  plug :authenticate when action in [:edit, :new, :update, :create, :delete, :bookmarklet, :search]
 
   alias Bookmarks.Bookmark
 
@@ -78,6 +78,29 @@ defmodule Bookmarks.BookmarkController do
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+  # Search bookmarks
+  def search(conn, %{"search_term" => st} =  params) do 
+    IO.puts("search term: #{st}")
+    page = from(b in Bookmark, 
+                # TODO: add a private search later
+                where: [private: false], 
+                where: like(b.title, ^"%#{st}%"),
+                #or_where:  like(b.description, ^"%#{st}%"),
+                # ecto 2.1
+                # or_where: [user_id: conn.assigns.current_user.id],
+                order_by: [desc: b.updated_at])
+              |> preload(:user)
+              |> preload(:tags)
+              |> Repo.paginate(params) 
+    render conn, "index.html", 
+      page: page,
+      bookmarks: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
   end
 
   def archive(conn, %{"id" => id}) do
@@ -159,7 +182,7 @@ defmodule Bookmarks.BookmarkController do
       conn
     else
       conn
-      |> put_flash(:error, "You must be logged in to access that page")
+      |> put_flash(:error, "You must be logged in to access that page from bookmarklet")
       |> redirect(to: session_path(conn, :new, orig_params: conn.params))
       |> halt()
     end
