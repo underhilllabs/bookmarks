@@ -44,7 +44,7 @@ defmodule Bookmarks.Mixfile do
      {:timex, "~> 3.0"},
      {:distillery, "~> 1.5"},
      {:secure_random, "~> 0.5"},
-     {:readability, "~> 0.6.1"},
+     {:readability, "~> 0.9.1"},
      {:scrivener_ecto, "~> 1.0"},
      {:scrivener_html, "~> 1.1"},
      {:ex_spec, "~> 2.0", only: :test},
