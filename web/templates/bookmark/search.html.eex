@@ -1,0 +1,29 @@
+
+<div class=main-wrapper>
+  <%= for bookmark <- @bookmarks do %>
+    <%= if (bookmark.user == @current_user ||  bookmark.private == false) do %>
+      <div class="bookmark-wrapper bookmark private-<%= bookmark.private %>">
+        <div class="bookmark-title"><a href="<%= bookmark.address %>"><%= bookmark.title %></a></div>
+            <div class="bookmark-description"><%= bookmark.description %></div>
+            <div class="bookmark-tags"><%= raw(Bookmarks.Bookmark.tag_link(bookmark.tags)) %></div>
+            <div class="bookmark-details"><%= bookmark.inserted_at |> Timex.format!("{Mfull} {D}, {YYYY}") %> by <%= bookmark.user.username %> 
+            <%= if bookmark.updated_at != bookmark.inserted_at do %>
+            <span class="bookmark-updated-at">[ Last updated at: <%= bookmark.updated_at |> Timex.format!("{Mfull} {D}, {YYYY}") %> ]</span>
+            <% end %>
+            <%= if @current_user == bookmark.user do %>
+              <%= link "Edit", to: bookmark_path(@conn, :edit, bookmark), class: "xbtn xbtn-default xbtn-xs" %>
+              <%= link "Delete", to: bookmark_path(@conn, :delete, bookmark), method: :delete, data: [confirm: "Are you sure?"], class: "xbtn xbtn-default xbtn-xs" %>
+              <%= if bookmark.archive_page do %>
+                <a href="/bookmarks/archive/<%= bookmark.id %>">View Archive</a>
+              <% end %>
+            <% end %>
+            </div>
+        </div>
+      <% end %>
+  <% end %>
+</div>
+
+<div class="pagination-wrapper center span7">
+  <%= pagination_links @page, path: &bookmark_path/4, action: :search %>
+</div>
+
