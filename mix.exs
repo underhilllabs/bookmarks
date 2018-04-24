@@ -33,9 +33,9 @@ defmodule Bookmarks.Mixfile do
   defp deps do
     [{:phoenix, "~> 1.2.1"},
      {:phoenix_pubsub, "~> 1.0"},
-     {:phoenix_ecto, "~> 3.0"},
+     {:phoenix_ecto, "~> 3.3"},
      {:poison, "~> 2.0"},
-     {:mariaex, "~> 0.7.5", override: true},
+     {:mariaex, "~> 0.8.4"},
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:guardian, "~> 0.13.0"},
