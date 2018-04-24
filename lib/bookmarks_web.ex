@@ -30,6 +30,7 @@ defmodule BookmarksWeb do
     quote do
       use Phoenix.Controller, namespace: BookmarksWeb
 
+      alias Bookmarks.Repo
       import Ecto
       import Ecto.Query
 
