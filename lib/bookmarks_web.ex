@@ -5,8 +5,8 @@ defmodule BookmarksWeb do
 
   This can be used in your application as:
 
-      use Bookmarks.Web, :controller
-      use Bookmarks.Web, :view
+      use BookmarksWeb, :controller
+      use BookmarksWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -30,7 +30,6 @@ defmodule BookmarksWeb do
     quote do
       use Phoenix.Controller, namespace: BookmarksWeb
 
-      alias Bookmarks.Repo
       import Ecto
       import Ecto.Query
 
