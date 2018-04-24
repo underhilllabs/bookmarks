@@ -10,11 +10,11 @@ config :bookmarks,
   ecto_repos: [Bookmarks.Repo]
 
 # Configures the endpoint
-config :bookmarks, Bookmarks.Endpoint,
+config :bookmarks, BookmarksWeb.Endpoint,
   url: [host: "bookmarks.denvertech.org"],
   secret_key_base: "klh8Qs4mdnM1Ry/rhn0z1Q4Kg/pMY4YRn9uHrfIKXUvIYNJxd/J/Gy7K/h6sxNUT",
-  render_errors: [view: Bookmarks.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Bookmarks.PubSub,
+  render_errors: [view: BookmarksWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: BookmarksWeb.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
@@ -33,7 +33,7 @@ config :guardian, Guardian,
   serializer: Bookmarks.GuardianSerializer
 
 config :scrivener_html,
-  routes_helper: Bookmarks.Router.Helpers
+  routes_helper: BookmarksWeb.Router.Helpers
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
