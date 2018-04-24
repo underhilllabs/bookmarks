@@ -8,12 +8,12 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
 
 /* line 1, /var/www/bkmark.me/app/assets/stylesheets/archive.css.scss */
 body.body-archive div.archive-main {
-  font-size: 16px;
+  font-size: 16px !important;
   padding: 0 0.5em 0 0.5em;
 }
 /* line 29, /var/www/bkmark.me/app/assets/stylesheets/bookmark.css.scss */
 body {
-  font-size: 16px;
+  font-size: 16px !important;
   margin: 0 0 0 0;
   background: #efefef;
   margin-top: 0px;
