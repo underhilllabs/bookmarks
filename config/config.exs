@@ -33,7 +33,7 @@ config :guardian, Guardian,
   serializer: Bookmarks.GuardianSerializer
 
 config :scrivener_html,
-  routes_helper: BigSnips.Router.Helpers
+  routes_helper: Bookmarks.Router.Helpers
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
