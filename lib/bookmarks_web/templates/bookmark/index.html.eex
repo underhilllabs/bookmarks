@@ -5,7 +5,7 @@
       <div class="bookmark-wrapper bookmark private-<%= bookmark.private %>">
         <div class="bookmark-title"><a href="<%= bookmark.address %>"><%= bookmark.title %></a></div>
             <div class="bookmark-description"><%= bookmark.description %></div>
-            <div class="bookmark-tags"><%= raw(Bookmarks.Bookmark.tag_link(bookmark.tags)) %></div>
+            <div class="bookmark-tags"><%= raw(BookmarksWeb.Bookmark.tag_link(bookmark.tags)) %></div>
             <div class="bookmark-details"><%= bookmark.inserted_at |> Timex.format!("{Mfull} {D}, {YYYY}") %> by <%= bookmark.user.username %> 
             <%= if bookmark.updated_at != bookmark.inserted_at do %>
             <span class="bookmark-updated-at">[ Last updated at: <%= bookmark.updated_at |> Timex.format!("{Mfull} {D}, {YYYY}") %> ]</span>

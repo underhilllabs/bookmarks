@@ -19,7 +19,7 @@
 
   <li>
     <strong>Tags:</strong>
-    <%= raw(Bookmarks.Bookmark.tag_link(@bookmark.tags)) %>
+    <%= raw(BookmarksWeb.Bookmark.tag_link(@bookmark.tags)) %>
   </li>
 
   <li>

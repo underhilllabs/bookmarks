@@ -1,5 +1,5 @@
-defmodule Bookmarks.ErrorView do
-  use Bookmarks.Web, :view
+defmodule BookmarksWeb.ErrorView do
+  use BookmarksWeb, :view
 
   def render("404.html", _assigns) do
     "Page not found"

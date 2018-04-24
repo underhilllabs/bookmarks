@@ -1,9 +1,9 @@
 defmodule BookmarksWeb.ApiBookmarkController do
-  use Bookmarks.Web, :controller
+  use BookmarksWeb, :controller
   #plug :authenticate when action in [:edit, :new, :update, :create, :delete, :bookmarklet]
 
   import Ecto.Query
-  alias Bookmarks.Bookmark
+  alias BookmarksWeb.Bookmark
 
   defp archive_url(url, user_id, id) do
     Task.async fn ->
@@ -33,7 +33,7 @@ defmodule BookmarksWeb.ApiBookmarkController do
 
   def create(conn, params) do
     hash = params
-    u = Repo.get! Bookmarks.User, hash["user_id"]
+    u = Repo.get! BookmarksWeb.User, hash["user_id"]
     if hash["token"] == u.api_token do
       params = %{params | "private" => (hash["private"] > 0)}
       is_archived = (hash["is_archived"] > 0)

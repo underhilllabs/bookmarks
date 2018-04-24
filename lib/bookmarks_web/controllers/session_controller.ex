@@ -1,5 +1,5 @@
 defmodule BookmarksWeb.SessionController do
-  use Bookmarks.Web, :controller
+  use BookmarksWeb, :controller
 
   def new(conn, _params) do
     render conn, "new.html"
@@ -7,7 +7,7 @@ defmodule BookmarksWeb.SessionController do
 
   # this is a login redirected from trying to bookmark page, it will always be a bookmarklet since you can't see add bookmark link when not logged in
   def create(conn, %{"session" => %{"username" => user, "password" => pass}, "orig_address" => address, "orig_title" => title, "orig_popup" => "1"} = params) do
-    case Bookmarks.Auth.login_by_username_and_pass(conn, user, pass, repo: Repo) do
+    case BookmarksWeb.Auth.login_by_username_and_pass(conn, user, pass, repo: Repo) do
       {:ok, conn} ->
         conn
         |> put_flash(:info, "Welcome back!")
@@ -19,7 +19,7 @@ defmodule BookmarksWeb.SessionController do
     end
   end
   def create(conn, %{"session" => %{"username" => user, "password" => pass}} = params) do
-    case Bookmarks.Auth.login_by_username_and_pass(conn, user, pass, repo: Repo) do
+    case BookmarksWeb.Auth.login_by_username_and_pass(conn, user, pass, repo: Repo) do
       {:ok, conn} ->
         conn
         |> put_flash(:info, "Welcome back!")
@@ -33,7 +33,7 @@ defmodule BookmarksWeb.SessionController do
 
   def delete(conn, _) do
     conn
-    |> Bookmarks.Auth.logout()
+    |> BookmarksWeb.Auth.logout()
     |> redirect(to: bookmark_path(conn, :index))
   end
 end

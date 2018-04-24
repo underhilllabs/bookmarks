@@ -1,3 +1,3 @@
-defmodule Bookmarks.LayoutView do
-  use Bookmarks.Web, :view
+defmodule BookmarksWeb.LayoutView do
+  use BookmarksWeb, :view
 end

@@ -1,11 +1,11 @@
-defmodule Bookmarks.UserController do
-  use Bookmarks.Web, :controller
+defmodule BookmarksWeb.UserController do
+  use BookmarksWeb, :controller
   plug :authenticate when action in [:edit, :delete, :reset_api_token]
 
-  alias Bookmarks.User
-  alias Bookmarks.Bookmark
-  alias Bookmarks.BookmarkTag
-  alias Bookmarks.Tag
+  alias BookmarksWeb.User
+  alias BookmarksWeb.Bookmark
+  alias BookmarksWeb.BookmarkTag
+  alias BookmarksWeb.Tag
   import Ecto.Query, only: [from: 2]
 
   def index(conn, _params) do
@@ -28,7 +28,7 @@ defmodule Bookmarks.UserController do
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
-        |> Bookmarks.Auth.login(user)
+        |> BookmarksWeb.Auth.login(user)
         |> put_flash(:info, "User created successfully.")
         |> redirect(to: user_path(conn, :index))
       {:error, changeset} ->

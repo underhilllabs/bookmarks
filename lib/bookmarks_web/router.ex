@@ -33,7 +33,7 @@ defmodule BookmarksWeb.Router do
   end
 
   #Other scopes may use custom stacks.
-  scope "/api", Bookmarks do
+  scope "/api", BookmarksWeb do
      pipe_through :api
      # /api/bookmarks/recent.json
      get  "/bookmarks/recent.json", ApiBookmarkController, :recent

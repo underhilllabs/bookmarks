@@ -1,8 +1,8 @@
 defmodule BookmarksWeb.BookmarkController do
-  use Bookmarks.Web, :controller
+  use BookmarksWeb, :controller
   plug :authenticate when action in [:edit, :new, :update, :create, :delete, :bookmarklet, :search]
 
-  alias Bookmarks.Bookmark
+  alias BookmarksWeb.Bookmark
 
   defp archive_url(url, user_id, id) do
     Task.async fn ->
@@ -41,7 +41,7 @@ defmodule BookmarksWeb.BookmarkController do
   # Show a user's bookmarks
   def user(conn, params) do
     %{"id" => user_id} = params
-    user = Repo.one(from u in Bookmarks.User, where: [id: ^user_id])
+    user = Repo.one(from u in BookmarksWeb.User, where: [id: ^user_id])
     page = from(b in Bookmark, 
               where: b.user_id == ^user_id,
               order_by: [desc: b.updated_at])

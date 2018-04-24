@@ -1,3 +1,3 @@
-defmodule Bookmarks.UtilityView do
-  use Bookmarks.Web, :view
+defmodule BookmarksWeb.UtilityView do
+  use BookmarksWeb, :view
 end

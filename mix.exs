@@ -3,8 +3,8 @@ defmodule Bookmarks.Mixfile do
 
   def project do
     [app: :bookmarks,
-     version: "0.0.1",
-     elixir: "~> 1.3",
+     version: "0.0.2",
+     elixir: "~> 1.4",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -31,12 +31,12 @@ defmodule Bookmarks.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.3.1"},
+    [{:phoenix, "~> 1.3.2", override: true},
      {:phoenix_pubsub, "~> 1.0"},
-     {:phoenix_ecto, "~> 3.3"},
+     {:phoenix_ecto, "~> 3.2"},
      {:poison, "~> 2.0"},
      {:mariaex, "~> 0.8.4"},
-     {:phoenix_html, "~> 2.6"},
+     {:phoenix_html, "~> 2.10"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:guardian, "~> 0.13.0"},
      {:comeonin, "~> 2.6"},

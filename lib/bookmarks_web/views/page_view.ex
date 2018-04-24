@@ -1,3 +1,3 @@
-defmodule Bookmarks.PageView do
-  use Bookmarks.Web, :view
+defmodule BookmarksWeb.PageView do
+  use BookmarksWeb, :view
 end

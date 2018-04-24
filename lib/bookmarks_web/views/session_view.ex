@@ -1,3 +1,3 @@
-defmodule Bookmarks.SessionView do
-  use Bookmarks.Web, :view
+defmodule BookmarksWeb.SessionView do
+  use BookmarksWeb, :view
 end

@@ -1,4 +1,4 @@
-defmodule Bookmarks.ErrorHelpers do
+defmodule BookmarksWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -32,9 +32,9 @@ defmodule Bookmarks.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(Bookmarks.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(BookmarksWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(Bookmarks.Gettext, "errors", msg, opts)
+      Gettext.dgettext(BookmarksWeb.Gettext, "errors", msg, opts)
     end
   end
 end

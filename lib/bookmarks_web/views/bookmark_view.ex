@@ -1,4 +1,4 @@
-defmodule Bookmarks.BookmarkView do
-  use Bookmarks.Web, :view
+defmodule BookmarksWeb.BookmarkView do
+  use BookmarksWeb, :view
   import Scrivener.HTML
 end

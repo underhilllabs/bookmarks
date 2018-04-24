@@ -1,4 +1,4 @@
-defmodule Bookmarks.TagView do
-  use Bookmarks.Web, :view
+defmodule BookmarksWeb.TagView do
+  use BookmarksWeb, :view
   import Scrivener.HTML
 end

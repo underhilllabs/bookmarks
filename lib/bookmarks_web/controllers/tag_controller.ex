@@ -1,8 +1,9 @@
-defmodule Bookmarks.TagController do
-  use Bookmarks.Web, :controller
+defmodule BookmarksWeb.TagController do
+  use BookmarksWeb, :controller
 
-  alias Bookmarks.Tag
-  alias Bookmarks.BookmarkTag
+  alias BookmarksWeb.Tag
+  alias BookmarksWeb.BookmarkTag
+  alias BookmarksWeb.Bookmark
   import Ecto.Query, only: [from: 2]
 
   def index(conn, _params) do
@@ -18,7 +19,7 @@ defmodule Bookmarks.TagController do
 
   def name(conn, params) do
     %{"name" => name} = params
-    page = from(b in Bookmarks.Bookmark,
+    page = from(b in Bookmark,
                     join: bt in BookmarkTag, on: b.id == bt.bookmark_id,
                     join: t in Tag, on: t.id == bt.tag_id,
                     where: t.name == ^name,
