@@ -24,7 +24,7 @@ defmodule Bookmarks.Router do
     get "/b", BookmarkController, :bookmarklet
     get "/goodbye", BookmarkController, :goodbye
     get "/reset_api_token", UserController, :reset_api_token
-    get "/search", BookmarkController, :search
+    get "/search", BookmarkController, :search, as: :search
 
     resources "/bookmarks", BookmarkController
     #resources "/users", UserController #, only: [:index, :show, :new, :create, :update]

@@ -23,7 +23,8 @@ defmodule Bookmarks.BookmarkController do
                 where: [private: false], 
                 # ecto 2.1
                 # or_where: [user_id: conn.assigns.current_user.id],
-                order_by: [desc: b.updated_at])
+                order_by: [desc: b.updated_at],
+                limit: 40)
               |> preload(:user)
               |> preload(:tags)
               |> Repo.paginate(params) 
@@ -86,8 +87,7 @@ defmodule Bookmarks.BookmarkController do
     page = from(b in Bookmark, 
                 # TODO: add a private search later
                 where: [private: false], 
-                where: like(b.title, ^"%#{st}%"),
-                #or_where:  like(b.description, ^"%#{st}%"),
+                where: like(b.title, ^"%#{st}%") or like(b.description, ^"%#{st}%"),
                 # ecto 2.1
                 # or_where: [user_id: conn.assigns.current_user.id],
                 order_by: [desc: b.updated_at])
@@ -100,7 +100,8 @@ defmodule Bookmarks.BookmarkController do
       page_number: page.page_number,
       page_size: page.page_size,
       total_pages: page.total_pages,
-      total_entries: page.total_entries
+      total_entries: page.total_entries,
+      search_term: st
   end
 
   def archive(conn, %{"id" => id}) do
