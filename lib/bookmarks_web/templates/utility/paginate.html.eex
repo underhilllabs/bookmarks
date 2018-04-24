@@ -21,7 +21,7 @@
     <span class=earlier><a href="?page=<%= @page_number - 2 %>"><%= @page_number - 2 %></a></span>
   <% end %>
   <%= if 1 < @page_number do %>
-    <span class=later><a href="?page=<%= @page_number - 1 %>">Later →</a></span>
+    <span class=later><a href="?jim=dandy&page=<%= @page_number - 1 %>">Later →</a></span>
   <% else %>
     <span class=later>Later →</span>
   <% end %>

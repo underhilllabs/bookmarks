@@ -1,5 +1,5 @@
-defmodule Bookmarks.User do
-  use Bookmarks.Web, :model
+defmodule BookmarksWeb.User do
+  use BookmarksWeb, :model
 
   schema "users" do
     field :email, :string
@@ -8,8 +8,8 @@ defmodule Bookmarks.User do
     field :username, :string
     field :fullname, :string
     field :api_token, :string
-    has_many :bookmarks, Bookmarks.Bookmark
-    has_many :tags, Bookmarks.Tag
+    has_many :bookmarks, BookmarksWeb.Bookmark
+    has_many :tags, BookmarksWeb.Tag
 
     timestamps()
   end

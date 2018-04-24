@@ -1,9 +1,9 @@
-defmodule Bookmarks.Tag do
-  use Bookmarks.Web, :model
+defmodule BookmarksWeb.Tag do
+  use BookmarksWeb, :model
 
   schema "tags" do
     field :name, :string
-    many_to_many :bookmarks, Bookmarks.Bookmark, join_through: Bookmarks.BookmarkTag
+    many_to_many :bookmarks, BookmarksWeb.Bookmark, join_through: BookmarksWeb.BookmarkTag
 
     timestamps()
   end

@@ -1,4 +1,4 @@
-defmodule Bookmarks.UserSocket do
+defmodule BookmarksWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels

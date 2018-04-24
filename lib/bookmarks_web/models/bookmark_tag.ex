@@ -1,9 +1,9 @@
-defmodule Bookmarks.BookmarkTag do
-  use Bookmarks.Web, :model
+defmodule BookmarksWeb.BookmarkTag do
+  use BookmarksWeb, :model
 
   schema "bookmarks_tags" do
-    belongs_to :bookmark, Bookmarks.Bookmark
-    belongs_to :tag, Bookmarks.Tag
+    belongs_to :bookmark, BookmarksWeb.Bookmark
+    belongs_to :tag, BookmarksWeb.Tag
 
     timestamps()
   end

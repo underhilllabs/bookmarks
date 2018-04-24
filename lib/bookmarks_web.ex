@@ -1,4 +1,4 @@
-defmodule Bookmarks.Web do
+defmodule BookmarksWeb do
   @moduledoc """
   A module that keeps using definitions for controllers,
   views and so on.
@@ -28,20 +28,20 @@ defmodule Bookmarks.Web do
 
   def controller do
     quote do
-      use Phoenix.Controller
+      use Phoenix.Controller, namespace: BookmarksWeb
 
       alias Bookmarks.Repo
       import Ecto
       import Ecto.Query
 
-      import Bookmarks.Router.Helpers
-      import Bookmarks.Gettext
+      import BookmarksWeb.Router.Helpers
+      import BookmarksWeb.Gettext
     end
   end
 
   def view do
     quote do
-      use Phoenix.View, root: "web/templates"
+      use Phoenix.View, root: "lib/bookmarks_web/templates", namespace: BookmarksWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
@@ -49,9 +49,9 @@ defmodule Bookmarks.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import Bookmarks.Router.Helpers
-      import Bookmarks.ErrorHelpers
-      import Bookmarks.Gettext
+      import BookmarksWeb.Router.Helpers
+      import BookmarksWeb.ErrorHelpers
+      import BookmarksWeb.Gettext
     end
   end
 
@@ -68,7 +68,7 @@ defmodule Bookmarks.Web do
       alias Bookmarks.Repo
       import Ecto
       import Ecto.Query
-      import Bookmarks.Gettext
+      import BookmarksWeb.Gettext
     end
   end
 

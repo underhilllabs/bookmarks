@@ -1,4 +1,4 @@
-defmodule Bookmarks.SessionController do
+defmodule BookmarksWeb.SessionController do
   use Bookmarks.Web, :controller
 
   def new(conn, _params) do

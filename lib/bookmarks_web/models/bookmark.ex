@@ -1,5 +1,5 @@
-defmodule Bookmarks.Bookmark do
-  use Bookmarks.Web, :model
+defmodule BookmarksWeb.Bookmark do
+  use BookmarksWeb, :model
 
   @derive {Poison.Encoder, only: [:title, :address, :updated_at, :created_at, :description, :private, :archive_page, :user_id, :token]}
 
@@ -10,8 +10,8 @@ defmodule Bookmarks.Bookmark do
     field :private, :boolean, default: false
     field :archive_page, :boolean, default: false
 
-    many_to_many :tags, Bookmarks.Tag, join_through: Bookmarks.BookmarkTag, on_replace: :delete 
-    belongs_to :user, Bookmarks.User
+    many_to_many :tags, BookmarksWeb.Tag, join_through: BookmarksWeb.BookmarkTag, on_replace: :delete 
+    belongs_to :user, BookmarksWeb.User
 
     timestamps()
   end
@@ -37,7 +37,7 @@ defmodule Bookmarks.Bookmark do
   end
 
   defp get_or_insert_tag(name) do
-    Bookmarks.Repo.get_by(Bookmarks.Tag, name: name) || Bookmarks.Repo.insert!(%Bookmarks.Tag{name:  name})
+    Bookmarks.Repo.get_by(BookmarksWeb.Tag, name: name) || Bookmarks.Repo.insert!(%BookmarksWeb.Tag{name:  name})
   end
 
   def tag_link(tagstr) do

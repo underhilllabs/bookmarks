@@ -1,4 +1,4 @@
-defmodule Bookmarks.BookmarkController do
+defmodule BookmarksWeb.BookmarkController do
   use Bookmarks.Web, :controller
   plug :authenticate when action in [:edit, :new, :update, :create, :delete, :bookmarklet, :search]
 

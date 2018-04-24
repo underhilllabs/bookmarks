@@ -11,7 +11,7 @@ defmodule Bookmarks do
       # Start the Ecto repository
       supervisor(Bookmarks.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(Bookmarks.Endpoint, []),
+      supervisor(BookmarksWeb.Endpoint, []),
       # Start your own worker by calling: Bookmarks.Worker.start_link(arg1, arg2, arg3)
       # worker(Bookmarks.Worker, [arg1, arg2, arg3]),
     ]

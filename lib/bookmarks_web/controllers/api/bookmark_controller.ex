@@ -1,4 +1,4 @@
-defmodule Bookmarks.ApiBookmarkController do
+defmodule BookmarksWeb.ApiBookmarkController do
   use Bookmarks.Web, :controller
   #plug :authenticate when action in [:edit, :new, :update, :create, :delete, :bookmarklet]
 

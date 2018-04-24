@@ -1,7 +1,7 @@
-defmodule Bookmarks.Endpoint do
+defmodule BookmarksWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :bookmarks
 
-  socket "/socket", Bookmarks.UserSocket
+  socket "/socket", BookmarksWeb.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -38,5 +38,5 @@ defmodule Bookmarks.Endpoint do
     key: "_bookmarks_key",
     signing_salt: "M5HgL/WB"
 
-  plug Bookmarks.Router
+  plug BookmarksWeb.Router
 end
