@@ -11,6 +11,15 @@ defmodule BookmarksWeb.ApiBookmarkController do
     end
   end
 
+  def all(conn, params) do
+    all = from(b in Bookmark,
+              where: [private: false],
+              order_by: [desc: b.updated_at])
+            |> preload(:user)
+            |> preload(:tags)
+            |> Repo.all()
+    json conn, all
+  end
   def recent(conn, params) do
 
     page = from(b in Bookmark, 

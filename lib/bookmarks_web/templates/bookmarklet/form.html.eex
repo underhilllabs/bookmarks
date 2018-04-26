@@ -7,7 +7,7 @@
 
   <div class="form-group">
     <%= label f, :title, class: "control-label" %>
-    <%= text_input f, :title, class: "form-control" %>
+    <input type=input name="bookmarks[tags]" value="<%= @tags %>">
     <%= error_tag f, :title %>
   </div>
 

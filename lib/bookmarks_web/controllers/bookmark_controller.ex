@@ -60,7 +60,7 @@ defmodule BookmarksWeb.BookmarkController do
 
   def new(conn, _params) do
     changeset = Bookmark.changeset(%Bookmark{}, %{tags: ""})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, tags: "")
   end
 
   def create(conn, %{"bookmark" => bookmark_params}) do
@@ -123,7 +123,7 @@ defmodule BookmarksWeb.BookmarkController do
     %Bookmark{tags: tags} = bookmark
     tagstr = tags |> Enum.map(&(&1.name)) |> Enum.join(", ")
     changeset = Bookmark.changeset(bookmark, %{tags: tagstr})
-    render(conn, "edit.html", bookmark: bookmark, tagstr: tagstr, changeset: changeset)
+    render(conn, "edit.html", bookmark: bookmark, tags: tagstr, changeset: changeset)
   end
 
   def bookmarklet(conn, %{"address" => address, "title" => title} = params) do
@@ -131,13 +131,13 @@ defmodule BookmarksWeb.BookmarkController do
       :nil ->
         bookmark = %Bookmark{address: address, title: title}
         changeset = Bookmark.changeset(bookmark, %{tags: ""})
-        render(conn, "bookmarklet_new.html", bookmark: bookmark, changeset: changeset)
+        render(conn, "bookmarklet_new.html", bookmark: bookmark, changeset: changeset, tags: "")
       bookmark ->
         bookmark = bookmark |> Repo.preload(:tags)
         %Bookmark{tags: tags} = bookmark
         tagstr = tags |> Enum.map(&(&1.name)) |> Enum.join(", ")
         changeset = Bookmark.changeset(bookmark, %{tags: tagstr})
-        render(conn, "bookmarklet_edit.html", bookmark: bookmark, changeset: changeset)
+        render(conn, "bookmarklet_edit.html", bookmark: bookmark, changeset: changeset, tags: tagstr)
     end
   end
 
