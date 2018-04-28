@@ -1,2 +1,2 @@
-<%= render "form.html", changeset: @changeset, popup: true,
+<%= render "form.html", changeset: @changeset, popup: true, tags: @tags,
                         action: bookmark_path(@conn, :update, @bookmark) %>

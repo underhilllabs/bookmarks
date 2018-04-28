@@ -136,7 +136,7 @@ defmodule BookmarksWeb.BookmarkController do
         bookmark = bookmark |> Repo.preload(:tags)
         %Bookmark{tags: tags} = bookmark
         tagstr = tags |> Enum.map(&(&1.name)) |> Enum.join(", ")
-        changeset = Bookmark.changeset(bookmark, %{tags: tagstr})
+        changeset = Bookmark.changeset(bookmark)
         render(conn, "bookmarklet_edit.html", bookmark: bookmark, changeset: changeset, tags: tagstr)
     end
   end
