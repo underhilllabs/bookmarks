@@ -19,7 +19,7 @@ defmodule Bookmarks.Mixfile do
   def application do
     [mod: {Bookmarks, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext, :scrivener_html,
-                    :scrivener_ecto, :comeonin, :phoenix_ecto, :timex, :readability, :mariaex,
+                    :scrivener_ecto, :comeonin, :phoenix_ecto, :timex, :readability, :postgrex,
                     :secure_random]]
   end
 
@@ -35,7 +35,7 @@ defmodule Bookmarks.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.2"},
      {:poison, "~> 2.0"},
-     {:mariaex, "~> 0.8.4"},
+     {:postgrex, "~> 0.13.3"},
      {:phoenix_html, "~> 2.10"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:guardian, "~> 0.13.0"},
