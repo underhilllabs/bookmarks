@@ -42,7 +42,7 @@ defmodule Bookmarks.Mixfile do
      {:comeonin, "~> 2.6"},
      {:gettext, "~> 0.11"},
      {:timex, "~> 3.0"},
-     {:distillery, "~> 1.5"},
+     {:distillery, "~> 1.5.4"},
      {:secure_random, "~> 0.5"},
      {:readability, "~> 0.9.1"},
      {:scrivener_ecto, "~> 1.0"},
