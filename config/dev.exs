@@ -35,7 +35,7 @@ config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
 config :bookmarks, Bookmarks.Repo,
-  adapter: Ecto.Adapters.MySQL,
+  adapter: Ecto.Adapters.Postgres,
   username: "root",
   password: "password_that_is_hard_to_guess",
   database: "bookmarks_dev",
