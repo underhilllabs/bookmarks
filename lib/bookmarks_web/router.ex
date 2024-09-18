@@ -35,6 +35,8 @@ defmodule BookmarksWeb.Router do
   #Other scopes may use custom stacks.
   scope "/api", BookmarksWeb do
      pipe_through :api
+     # /api/bookmarks/all.json
+     get  "/bookmarks/all.json", ApiBookmarkController, :all
      # /api/bookmarks/recent.json
      get  "/bookmarks/recent.json", ApiBookmarkController, :recent
      # /api/bookmarks/show.json?id=3434
